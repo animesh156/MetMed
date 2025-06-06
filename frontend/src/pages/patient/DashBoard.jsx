@@ -5,16 +5,19 @@ import { MdDashboard } from "react-icons/md";
 import { MdCalendarToday } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 
 function DashBoard() {
+
+    const navigate = useNavigate();
    
     const items = [
-        { name: "Dashboard", icon: MdDashboard },
-        { name: "Appointments", icon: MdCalendarToday },
-        { name: "Doctors", icon: FaUserDoctor },
-        { name: "Settings", icon: IoSettingsOutline },
-        { name: "Logout", icon: FiLogOut }
+        { name: "Dashboard", icon: MdDashboard, route: "/patient/dashboard" },
+        { name: "Appointments", icon: MdCalendarToday, route: "/patient/appointment" },
+        { name: "Doctors", icon: FaUserDoctor, route: "/patient/doctors" },
+        { name: "Settings", icon: IoSettingsOutline, route: "/patient/settings" },
+       
     ]
 
   return (
@@ -35,19 +38,19 @@ function DashBoard() {
           {/* Upcoming Appointments */}
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl font-semibold mb-3">Upcoming Appointments</h2>
-            <button className="btn btn-primary">View Now</button>
+            <button className="btn btn-primary" onClick={() => navigate('/patient/appointment')} >View Now</button>
           </div>
 
           {/* Book New Appointment */}
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl font-semibold mb-3">Book New Appointments</h2>
-            <button className="btn btn-primary">Book Now</button>
+            <button className="btn btn-primary" onClick={() => navigate('/patient/doctors')}>Book Now</button>
           </div>
 
           {/* Last Consulted */}
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl font-semibold mb-3">Last Consulted Doctors</h2>
-            <button className="btn btn-primary">View History</button>
+            <button className="btn btn-primary"  onClick={() => navigate('/patient/history')}>View History</button>
           </div>
         </div>
       </div>
