@@ -9,7 +9,7 @@ function Sidebar({ items }) {
         <li
           key={index}
           onClick={() => navigate(item.route)}
-          className="flex items-center space-x-2 hover:text-blue-600 cursor-pointer"
+          className="flex items-center space-x-2 text-black hover:text-blue-600 cursor-pointer"
         >
           <item.icon className="text-xl" />
           <span>{item.name}</span>
