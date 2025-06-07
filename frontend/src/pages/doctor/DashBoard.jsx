@@ -53,7 +53,7 @@ function DoctorDashboard() {
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl text-black font-semibold mb-3">Consultation History</h2>
             <p className="text-gray-700 mb-3">Access past patient records and notes.</p>
-            <button className="btn btn-primary">View History</button>
+            <button className="btn btn-primary" onClick={() => navigate('/doctor/history')}>View History</button>
           </div>
 
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">

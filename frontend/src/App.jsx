@@ -13,6 +13,9 @@ import PatientSetting from "./pages/patient/PatientSetting";
 import DoctorSchedule from "./pages/doctor/Schedule";
 import DoctorAvailbility from "./pages/doctor/Availability";
 import DoctorEarning from "./pages/doctor/EarningReport";
+import DoctorHistory from './pages/doctor/History'
+import DoctorVerify from './pages/admin/DoctorVerification';
+import PatientList from "./pages/admin/PatientList";
 
 function App() {
   return (
@@ -26,11 +29,14 @@ function App() {
         <Route path="/patient/settings" element={<PatientSetting />} />
 
         <Route path="/admin/dashboard" element={<AdminDashBaord />} />
+         <Route path="/admin/verify" element={<DoctorVerify />} />
+          <Route path="/admin/patient-list" element={<PatientList />} />
 
         <Route path="/doctor/dashboard" element={<DoctorDashBaord />} />
         <Route path="/doctor/schedule" element={<DoctorSchedule />} />
         <Route path="/doctor/availability" element={<DoctorAvailbility />} />
          <Route path="/doctor/earning" element={<DoctorEarning />} />
+          <Route path="/doctor/history" element={<DoctorHistory />} />
 
 
         <Route path="*" element={<NotFound />} />

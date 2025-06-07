@@ -6,8 +6,10 @@ import { MdCalendarToday } from "react-icons/md";
 import { FaUserDoctor } from "react-icons/fa6";
 import { FiLogOut } from "react-icons/fi";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function DashBoard() {
+  const navigate = useNavigate();
     const items = [
                 { name: "Dashboard", icon: MdDashboard },
                 { name: "Appointments", icon: MdCalendarToday },
@@ -37,14 +39,14 @@ function DashBoard() {
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl font-semibold mb-3">Doctors Pending Verification</h2>
             <p className="text-gray-700 mb-3">8 doctors are awaiting approval.</p>
-            <button className="btn btn-warning">Verify Now</button>
+            <button className="btn btn-warning" onClick={() => navigate('/admin/verify')}>Verify Now</button>
           </div>
 
           {/* Total Registered Patients */}
           <div className="card bg-white p-5 rounded shadow hover:shadow-md transition">
             <h2 className="text-xl font-semibold mb-3">Total Patients</h2>
             <p className="text-gray-700 mb-3">532 patients registered on the platform.</p>
-            <button className="btn btn-primary">View Patients</button>
+            <button className="btn btn-primary" onClick={() => navigate('/admin/patient-list')}>View Patients</button>
           </div>
 
           {/* Appointment Logs */}
