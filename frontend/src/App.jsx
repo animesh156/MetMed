@@ -16,11 +16,13 @@ import DoctorEarning from "./pages/doctor/EarningReport";
 import DoctorHistory from './pages/doctor/History'
 import DoctorVerify from './pages/admin/DoctorVerification';
 import PatientList from "./pages/admin/PatientList";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/patient/dashboard" element={<PatientDashBaord />} />
         <Route path="/patient/appointment" element={<PatientAppointment />} />
         <Route path="/patient/book" element={<BookAppointment />} />
