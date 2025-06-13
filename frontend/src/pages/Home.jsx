@@ -140,23 +140,12 @@ function Home() {
         {/* CTA Buttons */}
         <div className="flex flex-wrap justify-center gap-6 mb-14">
           <button
-            onClick={() => navigate("/patient/dashboard")}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-md shadow-md transition"
+            onClick={() => navigate("/login")}
+            className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-semibold px-6 py-3 rounded-md shadow-md transition"
           >
-            Patient Portal
+            Book an Appointment
           </button>
-          <button
-            onClick={() => navigate("/doctor/dashboard")}
-            className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-md shadow-md transition"
-          >
-            Doctor Portal
-          </button>
-          <button
-            onClick={() => navigate("/admin/dashboard")}
-            className="bg-gray-700 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-md shadow-md transition"
-          >
-            Admin Panel
-          </button>
+        
         </div>
 
         {/* Stats with Icons */}
