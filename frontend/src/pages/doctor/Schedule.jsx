@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Schedule = () => {
-  // Example hardcoded appointment data
   const todayAppointments = [
     {
       id: 1,
@@ -27,28 +26,32 @@ const Schedule = () => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">Today's Appointments</h2>
+    <div className=" mx-auto p-6 bg-neutral-900 min-h-screen text-white">
+      <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">
+        Today's Appointments
+      </h2>
 
       {todayAppointments.length === 0 ? (
-        <p className="text-center text-gray-500">No appointments scheduled for today.</p>
+        <p className="text-center text-gray-400">No appointments scheduled for today.</p>
       ) : (
         <ul className="space-y-4">
           {todayAppointments.map((appointment) => (
             <li
               key={appointment.id}
-              className="border rounded-lg p-4 shadow hover:shadow-md transition"
+              className="border border-neutral-700 rounded-lg p-4 shadow-md hover:shadow-lg bg-neutral-800 transition"
             >
               <div className="flex justify-between items-center mb-2">
-                <h3 className="text-xl font-semibold">{appointment.patientName}</h3>
-                <span className="text-sm text-gray-600">{appointment.time}</span>
+                <h3 className="text-xl font-semibold text-white">
+                  {appointment.patientName}
+                </h3>
+                <span className="text-sm text-gray-400">{appointment.time}</span>
               </div>
-              <p className="text-gray-700 mb-1">Symptoms: {appointment.symptoms}</p>
+              <p className="text-gray-300 mb-1">Symptoms: {appointment.symptoms}</p>
               <p
                 className={`inline-block px-3 py-1 rounded text-sm font-medium ${
                   appointment.status === 'Confirmed'
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-yellow-100 text-yellow-700'
+                    ? 'bg-green-700 text-white'
+                    : 'bg-yellow-600 text-black'
                 }`}
               >
                 {appointment.status}
