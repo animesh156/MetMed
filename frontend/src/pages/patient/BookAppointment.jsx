@@ -20,8 +20,8 @@ function BookAppointment() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 mt-10 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-6 text-center">Book Appointment with</h2>
+    <div className="max-w-2xl mx-auto p-6 mt-10  shadow rounded">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">Book Appointment with</h2>
 
       {/* Doctor Card */}
       <div className="bg-blue-50 p-4 rounded shadow mb-6">

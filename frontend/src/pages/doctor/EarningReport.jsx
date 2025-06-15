@@ -13,33 +13,36 @@ const EarningReport = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h2 className="text-3xl font-bold mb-4 text-center">Earning Report</h2>
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
+      <h2 className="text-3xl font-bold mb-4 text-white text-center">Earning Report</h2>
 
       {/* Total Earnings */}
-      <div className="bg-blue-100 text-blue-800 p-4 rounded mb-6 text-center">
+      <div className="bg-blue-900/20 text-blue-400 p-4 rounded mb-6 text-center">
         <h3 className="text-xl font-semibold">Total Earnings - {earnings.month}</h3>
         <p className="text-3xl font-bold mt-2">₹{earnings.total.toLocaleString()}</p>
       </div>
 
       {/* Table of Consultations */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border rounded text-left">
-          <thead className="bg-gray-200">
+        <table className="min-w-full text-left border-collapse">
+          <thead className="bg-neutral-700 text-gray-300">
             <tr>
-              <th className="px-4 py-2 border">#</th>
-              <th className="px-4 py-2 border">Patient</th>
-              <th className="px-4 py-2 border">Date</th>
-              <th className="px-4 py-2 border">Amount</th>
+              <th className="px-4 py-2 border border-neutral-600">#</th>
+              <th className="px-4 py-2 border border-neutral-600">Patient</th>
+              <th className="px-4 py-2 border border-neutral-600">Date</th>
+              <th className="px-4 py-2 border border-neutral-600">Amount</th>
             </tr>
           </thead>
           <tbody>
             {earnings.consultations.map((item, index) => (
-              <tr key={item.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border">{index + 1}</td>
-                <td className="px-4 py-2 border">{item.patient}</td>
-                <td className="px-4 py-2 border">{item.date}</td>
-                <td className="px-4 py-2 border">₹{item.amount}</td>
+              <tr
+                key={item.id}
+                className="hover:bg-neutral-700 text-white transition"
+              >
+                <td className="px-4 py-2 border border-neutral-700">{index + 1}</td>
+                <td className="px-4 py-2 border border-neutral-700">{item.patient}</td>
+                <td className="px-4 py-2 border border-neutral-700">{item.date}</td>
+                <td className="px-4 py-2 border border-neutral-700">₹{item.amount}</td>
               </tr>
             ))}
           </tbody>

@@ -126,7 +126,7 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen bg-[#121212] text-white flex flex-col items-center justify-center px-6 py-12">
       <div className="h-dvh m-auto flex flex-col items-center justify-center">
         <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-6">
           Welcome to <span className="text-blue-600">MetMed</span>
@@ -230,7 +230,7 @@ function Home() {
           {doctors.map((doctor, index) => (
             <div
               key={index}
-              className="bg-neutral-900 w-80 p-6 rounded-lg shadow-md mt-8"
+              className="bg-neutral-800 w-80 p-6 rounded-lg shadow-md mt-8"
             >
               <img
                 src={doctor.image}

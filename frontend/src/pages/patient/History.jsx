@@ -22,23 +22,23 @@ const mockHistory = [
 function History() {
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-center mb-6">Consultation History</h2>
+      <h2 className="text-3xl font-bold text-white text-center mb-6">Consultation History</h2>
 
       {mockHistory.length === 0 ? (
-        <p className="text-center text-gray-500">No history available.</p>
+        <p className="text-center text-white">No history available.</p>
       ) : (
         <div className="space-y-4">
           {mockHistory.map((entry) => (
             <div
               key={entry.id}
-              className="border rounded-md shadow-sm p-5 bg-white hover:shadow-md transition"
+              className="border rounded-md shadow-sm p-5 bg-neutral-800 border-neutral-700 hover:shadow-md transition"
             >
               <div className="flex justify-between mb-2">
-                <h3 className="text-xl font-semibold">{entry.doctor}</h3>
-                <span className="text-gray-600">{entry.date} at {entry.time}</span>
+                <h3 className="text-xl text-blue-600 font-semibold">{entry.doctor}</h3>
+                <span className="text-slate-100">{entry.date} at {entry.time}</span>
               </div>
-              <p className="text-gray-700"><strong>Diagnosis:</strong> {entry.diagnosis}</p>
-              <p className="text-gray-700"><strong>Prescription:</strong> {entry.prescription}</p>
+              <p className="text-slate-100"><strong>Diagnosis:</strong> {entry.diagnosis}</p>
+              <p className="text-slate-100"><strong>Prescription:</strong> {entry.prescription}</p>
             </div>
           ))}
         </div>

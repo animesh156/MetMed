@@ -7,69 +7,84 @@ function PatientSetting() {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
-    // Call API to update profile
     alert('Profile updated successfully!');
   };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
-    // Call API to update password
     alert('Password changed!');
   };
 
   const handleLogout = () => {
-    // Clear cookie/session & navigate to login
     alert('Logged out!');
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-6 text-center">Patient Settings</h2>
+    <div className="max-w-3xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
+      <h2 className="text-2xl font-bold mb-6 text-white text-center">Patient Settings</h2>
 
       {/* Profile Update Form */}
       <form onSubmit={handleProfileUpdate} className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Update Profile</h3>
+        <h3 className="text-xl font-semibold text-gray-200 mb-4">Update Profile</h3>
+
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Name</label>
+          <label className="block text-gray-300 mb-1">Name</label>
           <input
             type="text"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
+
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">Email</label>
+          <label className="block text-gray-300 mb-1">Email</label>
           <input
             type="email"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">Save Changes</button>
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Save Changes
+        </button>
       </form>
 
       {/* Password Update Form */}
       <form onSubmit={handlePasswordChange} className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Change Password</h3>
+        <h3 className="text-xl font-semibold text-gray-200 mb-4">Change Password</h3>
+
         <div className="mb-4">
-          <label className="block text-gray-700 mb-1">New Password</label>
+          <label className="block text-gray-300 mb-1">New Password</label>
           <input
             type="password"
-            className="input input-bordered w-full"
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="btn btn-warning">Update Password</button>
+
+        <button
+          type="submit"
+          className="bg-yellow-500 text-black px-4 py-2 rounded hover:bg-yellow-600 transition"
+        >
+          Update Password
+        </button>
       </form>
 
       {/* Logout */}
-      <button onClick={handleLogout} className="btn btn-error w-full">
+      <button
+        onClick={handleLogout}
+        className="bg-red-600 text-white w-full py-2 px-4 rounded hover:bg-red-700 transition"
+      >
         Logout
       </button>
     </div>

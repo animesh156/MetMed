@@ -42,37 +42,45 @@ function DoctorVerification() {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Doctor Verification</h2>
+    <div className="p-6 max-w-5xl mx-auto  min-h-screen">
+      <h2 className="text-3xl font-bold text-center text-blue-400 mb-8">Doctor Verification</h2>
 
       {doctors.length === 0 ? (
-        <p className="text-center text-gray-600">No pending doctor verifications.</p>
+        <p className="text-center text-gray-400">No pending doctor verifications.</p>
       ) : (
         <div className="grid gap-6 md:grid-cols-2">
           {doctors.map((doctor) => (
-            <div key={doctor.id} className="bg-white shadow rounded p-4 border-l-4 border-yellow-500">
-              <h3 className="text-lg font-bold">{doctor.name}</h3>
-              <p className="text-gray-700">Specialization: {doctor.specialization}</p>
-              <p className="text-gray-700">Experience: {doctor.experience}</p>
-              <p className="text-gray-700 mb-2">Documents: {doctor.documents.join(', ')}</p>
+            <div
+              key={doctor.id}
+              className="bg-neutral-800 border-l-4 border-yellow-400 p-5 rounded shadow"
+            >
+              <h3 className="text-xl font-semibold text-white">{doctor.name}</h3>
+              <p className="text-gray-300">Specialization: {doctor.specialization}</p>
+              <p className="text-gray-300">Experience: {doctor.experience}</p>
+              <p className="text-gray-300 mb-2">
+                Documents:{" "}
+                <span className="text-gray-400">{doctor.documents.join(', ')}</span>
+              </p>
 
               <div className="flex space-x-3 mt-3">
                 <button
                   className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
                   onClick={() => handleVerify(doctor.id)}
+                  disabled={doctor.status === 'Verified'}
                 >
-                  Verify
+                  {doctor.status === 'Verified' ? 'Verified' : 'Verify'}
                 </button>
                 <button
                   className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
                   onClick={() => handleReject(doctor.id)}
+                  disabled={doctor.status === 'Verified'}
                 >
                   Reject
                 </button>
               </div>
 
               {doctor.status === 'Verified' && (
-                <p className="text-green-600 font-medium mt-2">Verified ✅</p>
+                <p className="text-green-400 font-medium mt-2">Doctor has been verified ✅</p>
               )}
             </div>
           ))}

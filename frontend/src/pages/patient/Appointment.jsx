@@ -22,8 +22,8 @@ function Appointment() {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-center text-3xl font-semibold mb-6 text-gray-800">
+    <div className="p-6  min-h-screen">
+      <h1 className="text-center text-3xl font-semibold mb-6 text-white">
         Upcoming Appointments
       </h1>
 
@@ -32,14 +32,14 @@ function Appointment() {
       ) : (
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {appointments.map((appt) => (
-            <li key={appt.id} className="bg-white p-4 rounded shadow hover:shadow-md transition">
+            <li key={appt.id} className="bg-neutral-800 p-4 rounded shadow hover:shadow-md transition">
               <h2 className="text-xl font-semibold mb-1 text-blue-700">{appt.doctor}</h2>
-              <p className="text-gray-700">📅 {appt.date} at 🕒 {appt.time}</p>
-              <p className="text-gray-600 mt-1">Type: {appt.type}</p>
+              <p className="text-white">📅 {appt.date} at 🕒 {appt.time}</p>
+              <p className="text-white mt-1">Type: {appt.type}</p>
               <p className={`mt-2 font-medium ${appt.status === 'Confirmed' ? 'text-green-600' : 'text-yellow-600'}`}>
                 Status: {appt.status}
               </p>
-              <button className="btn btn-sm btn-primary mt-4">View Details</button>
+              <button className="btn btn-sm bg-emerald-400 transition hover:bg-emerald-600 mt-4">View Details</button>
             </li>
           ))}
         </ul>

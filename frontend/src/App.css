@@ -3,18 +3,3 @@
   themes: false;
 }
 
-.hover-fill::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 0%;
-  width: 100%;
-  background: linear-gradient(to top, #3b82f6 0%, transparent 100%);
-  transition: height 0.4s ease-in-out;
-  z-index: 0;
-}
-
-.hover-fill:hover::after {
-  height: 100%;
-}
