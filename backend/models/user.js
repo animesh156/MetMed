@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["patient", "admin"],
-      default: "user",
+      enum: ["patient", "admin", "doctor"],
+      default: "patient",
     },
     gender: {
       type: String,
@@ -34,4 +34,6 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("Usert, userSchema");
+module.exports = mongoose.model("User", userSchema);
+
+// The schema includes fields for name, email, password, role
