@@ -126,13 +126,13 @@ function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white flex flex-col items-center justify-center px-6 py-12">
+    <div className="min-h-screen  dark:text-white flex flex-col items-center justify-center px-6 py-12">
       <div className="h-dvh m-auto flex flex-col items-center justify-center">
         <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-6">
           Welcome to <span className="text-blue-600">MetMed</span>
         </h1>
 
-        <p className="text-lg md:text-xl text-center max-w-2xl text-gray-300 mb-10">
+        <p className="text-lg md:text-xl text-center max-w-2xl dark:text-gray-300 mb-10">
           Experience world-class healthcare with our team of expert doctors.
           Book appointments online and get the care you deserve.
         </p>
@@ -150,26 +150,26 @@ function Home() {
 
         {/* Stats with Icons */}
         <div className="flex flex-wrap justify-center gap-8 mt-4">
-          <div className=" text-center rounded-lg px-6 py-5 shadow-md">
+          <div className=" bg-sky-100 text-center rounded-lg px-6 py-5 shadow-md">
             <MdOutlineSecurity className="text-4xl text-blue-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold dark:text-white">
               <CountUp end={25} duration={2} />+
             </h3>
-            <p className="text-gray-400">Certified Doctors</p>
+            <p className="dark:text-gray-400">Certified Doctors</p>
           </div>
 
-          <div className=" text-center rounded-lg px-6 py-5 shadow-md">
+          <div className="bg-sky-100 text-center rounded-lg px-6 py-5 shadow-md">
             <FaRegHeart className="text-4xl text-red-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold dark:text-white">
               <CountUp end={1200} duration={2} />+
             </h3>
-            <p className="text-gray-400">Happy Patients</p>
+            <p className="dark:text-gray-400">Happy Patients</p>
           </div>
 
-          <div className=" text-center rounded-lg px-6 py-5 shadow-md">
+          <div className="bg-sky-100 text-center rounded-lg px-6 py-5 shadow-md">
             <CiCalendar className="text-4xl text-green-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">24/7</h3>
-            <p className="text-gray-400">Availability</p>
+            <h3 className="text-xl font-bold dark:text-white">24/7</h3>
+            <p className="dark:text-gray-400">Availability</p>
           </div>
         </div>
       </div>

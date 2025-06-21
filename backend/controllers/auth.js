@@ -90,6 +90,45 @@ const loginUser = async (req, res) => {
   }
 };
 
+const firebaseLogin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    // ✅ Verify Firebase token
+    const decoded = await admin.auth().verifyIdToken(token);
+
+    const { email, name, role } = decoded;
+
+    if (!email) {
+      return res.status(400).json({ error: "Invalid Firebase token" });
+    }
+
+    // 🔍 Check if user already exists in DB
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      // 🔧 If not, create one
+      user = await User.create({
+        name,
+        email,
+        role,
+        password: "", // leave empty for Firebase
+      });
+    }
+
+    generateToken(user);
+    return res.status(200).json({
+      message: "Login successful",
+      name: user.name,
+      email: user.email,
+      role: user.role
+    });
+  } catch (err) {
+    console.error("Firebase login error:", err);
+    return res.status(401).json({ error: "Invalid or expired Firebase token" });
+  }
+};
+
 // @desc Logout a user
 // @route POST /api/auth/logout
 // @access Public
@@ -102,5 +141,6 @@ const logOut = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  firebaseLogin,
   logOut,
 };
