@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
-const generateToken = (user) => {
+const generateToken = (res,user) => {
   const token = jwt.sign(
     {
       userId: user._id,
@@ -49,7 +49,7 @@ const registerUser = async (req, res) => {
   });
 
   if (user) {
-    generateToken(user);
+    generateToken(res,user);
 
     res.status(201).json({
       _id: user._id,
@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
   }
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    generateToken(token);
+    generateToken(res,user);
 
     res.json({
       _id: user._id,
@@ -116,7 +116,7 @@ const firebaseLogin = async (req, res) => {
       });
     }
 
-    generateToken(user);
+    generateToken(res,user);
     return res.status(200).json({
       message: "Login successful",
       name: user.name,
