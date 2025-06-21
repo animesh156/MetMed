@@ -8,6 +8,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const doctorRoutes = require("./routes/doctor");
 const cookieParser = require("cookie-parser");
+const appointmentRoute = require("./routes/appointment");
 
 connectDB();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/doctor", doctorRoutes);
+app.use("/api/appointment", appointmentRoute);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`.cyan.underline);

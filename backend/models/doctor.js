@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const doctorSchema = new mongoose.Schema({
    doctorId : {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
    },
     experience: {
