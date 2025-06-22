@@ -27,36 +27,48 @@ const generateToken = (res,user) => {
 //  @access Public
 
 const registerUser = async (req, res) => {
-  const { name, email, password, role } = req.body;
-  if (!name || !email || !password || !role) {
-    return res.status(400).json({ message: "Please fill all the fields" });
-  }
+  try {
+    const { name, email, password, role } = req.body;
 
-  const userExists = await User.findOne({ email });
-  if (userExists) {
-    return res.status(400).json({ message: "User already exists" });
-  }
+    if (!name || !email || !password || !role) {
+      return res.status(400).json({ message: "Please fill all the fields" });
+    }
 
-  // Hash the password
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
+    if (role === 'admin') {
+      return res.status(401).json({ message: "You are not allowed to create admin users" });
+    }
 
-  const user = await User.create({
-    name,
-    email,
-    password: hashedPassword,
-    role,
-  });
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-  if (user) {
-    generateToken(res,user);
+    // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
     });
+
+    if (user) {
+      generateToken(res, user);
+
+      return res.status(201).json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      });
+    } else {
+      return res.status(500).json({ message: "User creation failed" });
+    }
+  } catch (error) {
+    console.error("Register error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

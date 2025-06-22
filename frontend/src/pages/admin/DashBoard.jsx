@@ -13,7 +13,7 @@ function DashBoard() {
     { name: "Appointments", icon: MdCalendarToday },
     { name: "Earnings", icon: MdOutlineAttachMoney },
     { name: "Settings", icon: IoSettingsOutline },
-    { name: "Logout", icon: FiLogOut },
+   { name: "Logout", icon: FiLogOut, route: "/" }
   ];
 
   return (

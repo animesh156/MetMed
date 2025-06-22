@@ -19,6 +19,7 @@ function DashBoard() {
     },
     { name: "Doctors", icon: FaUserDoctor, route: "/patient/doctors" },
     { name: "Settings", icon: IoSettingsOutline, route: "/patient/settings" },
+     { name: "Logout", icon: FiLogOut, route: "/" }
   ];
 
   return (

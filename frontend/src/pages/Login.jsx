@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider, signInWithPopup } from "../firebase"; // 👈 import firebase auth
 import { useNavigate, Link } from "react-router-dom"; // 👈 for navigation
+import API from '../utils/api'
 
 function Login() {
   const [role, setRole] = useState("patient");
@@ -10,10 +11,36 @@ function Login() {
 
   const navigate = useNavigate(); // 👈 for navigation
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log({ role, email, password });
-    // 🔐 TODO: Firebase email/password login if needed
+    
+    if(!email || !password) {
+      alert("please enter required fields")
+      return;
+    }
+
+    try {
+
+       const response = await API.post('/auth/login', 
+      {email, password},
+      {withCredentials: true}
+    )
+
+    if(response.status === 200) {
+      if (role === "doctor") navigate("/doctor/dashboard");
+      else if (role === "admin") navigate("/admin/dashboard");
+      else navigate("/patient/dashboard");
+    }
+    else {
+      alert('server error')
+    }
+      
+    } catch (error) {
+      console.log(error)
+    }
+
+   
+    
   };
 
   const handleGoogleLogin = async () => {
