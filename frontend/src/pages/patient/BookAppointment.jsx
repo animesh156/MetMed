@@ -1,74 +1,97 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function BookAppointment() {
-  const location = useLocation();
-  const doctor = location.state?.doctor;
+  const { state } = useLocation(); // doctor info passed from previous page
+  const navigate = useNavigate();
 
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
+  console.log("Doctor Info:", state);
 
-  const times = ['10:00 AM', '11:30 AM', '2:00 PM', '4:00 PM'];
+  const [date, setDate] = useState('');
+  const [slot, setSlot] = useState('');
+  const [reason, setReason] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Appointment booked with ${doctor.name} on ${selectedDate} at ${selectedTime}`);
+
+    if (!date || !slot || !reason) {
+      toast.error("Please fill all fields.");
+      return;
+    }
+
+    // Proceed to payment or confirm appointment
+    navigate('/patient/payment', {
+      state: {
+        doctorId: state.doctor.id,
+        name: state.doctor.name,
+        specialization: state.doctor.specialization,
+        fee: state.doctor.fee,
+        date,
+        slot,
+        reason,
+      },
+    });
   };
 
-  if (!doctor) {
-    return <div className="text-center text-red-600 text-xl mt-10">No doctor selected.</div>;
-  }
-
   return (
-    <div className="max-w-2xl mx-auto p-6 mt-10  shadow rounded">
-      <h2 className="text-2xl font-bold text-white mb-6 text-center">Book Appointment with</h2>
+    <div className="max-w-xl mx-auto mt-10 bg-neutral-800 p-6 rounded shadow text-white">
+      <h2 className="text-2xl font-bold mb-6 text-center">Book Appointment</h2>
 
-      {/* Doctor Card */}
-      <div className="bg-blue-50 p-4 rounded shadow mb-6">
-        <h3 className="text-xl font-semibold">{doctor.name}</h3>
-        <p className="text-gray-700">{doctor.specialization}</p>
-        <p className="text-gray-500">Fee: ₹{doctor.fee}</p>
-      </div>
-
-      {/* Booking Form */}
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Date Selection */}
-        <div>
-          <label className="block font-medium mb-2">Choose Date</label>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label className="block text-gray-300 mb-1">Doctor</label>
           <input
-            type="date"
-            className="w-full border px-4 py-2 rounded"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            required
+            type="text"
+            value={state?.doctor.name || 'Unknown'}
+            disabled
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
           />
         </div>
 
-        {/* Time Slot Selection */}
-        <div>
-          <label className="block font-medium mb-2">Available Time Slots</label>
-          <div className="grid grid-cols-2 gap-3">
-            {times.map((time) => (
-              <button
-                type="button"
-                key={time}
-                onClick={() => setSelectedTime(time)}
-                className={`border px-4 py-2 rounded text-center ${
-                  selectedTime === time ? 'bg-blue-600 text-white' : 'bg-gray-100'
-                }`}
-              >
-                {time}
-              </button>
-            ))}
-          </div>
+        <div className="mb-4">
+          <label className="block text-gray-300 mb-1">Date</label>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
+          />
         </div>
 
-        {/* Submit Button */}
+        <div className="mb-4">
+          <label className="block text-gray-300 mb-1">Slot</label>
+          <select
+            value={slot}
+            onChange={(e) => setSlot(e.target.value)}
+            required
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
+          >
+            <option value="">Select a slot</option>
+            {state?.doctor.slots?.map((s, i) => (
+              <option key={i} value={s}>{s}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-gray-300 mb-1">Concern / Reason</label>
+          <textarea
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            required
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
+            rows="4"
+            placeholder="Describe your concern..."
+          />
+        </div>
+
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          Confirm Appointment
+          Proceed to Payment
         </button>
       </form>
     </div>

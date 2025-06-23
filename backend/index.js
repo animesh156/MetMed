@@ -9,7 +9,8 @@ const authRoutes = require("./routes/auth");
 const doctorRoutes = require("./routes/doctor");
 const cookieParser = require("cookie-parser");
 const appointmentRoute = require("./routes/appointment");
-const adminRoutes = require('./routes/admin')
+const adminRoutes = require("./routes/admin");
+const patientRoutes = require("./routes/patient");
 
 connectDB();
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/doctor", doctorRoutes);
 app.use("/api/appointment", appointmentRoute);
 app.use("/api/admin", adminRoutes);
+app.use("/api/patient", patientRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`.cyan.underline);

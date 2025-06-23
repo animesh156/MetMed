@@ -1,62 +1,75 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-
-const doctorsList = [
-  {
-    id: 1,
-    name: 'Dr. Anjali Sharma',
-    specialization: 'Cardiologist',
-    diseases: ['Heart disease', 'Hypertension'],
-    fee: 800,
-  },
-  {
-    id: 2,
-    name: 'Dr. Rakesh Nair',
-    specialization: 'Dermatologist',
-    diseases: ['Acne', 'Eczema', 'Psoriasis'],
-    fee: 600,
-  },
-  {
-    id: 3,
-    name: 'Dr. Priya Khanna',
-    specialization: 'Pediatrician',
-    diseases: ['Cold', 'Fever', 'Flu'],
-    fee: 500,
-  },
-];
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../utils/api";
+import Loader from "../../components/Loader";
+import toast from "react-hot-toast";
 
 function Doctors() {
+  const [doctors, setDoctors] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await API.get("/doctor/all");
+        setDoctors(response.data);
+      } catch (error) {
+        toast.error("Failed to load doctors");
+        console.error("Error fetching doctors:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  if (loading) return <Loader />;
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-blue-400 text-center mb-6">Our Doctors</h2>
+      <h2 className="text-3xl font-bold text-blue-400 text-center mb-6">
+        Available Doctors
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {doctorsList.map((doc) => (
+        {doctors.map((doc) => (
           <div
-            key={doc.id}
+            key={doc._id}
             className="bg-neutral-800 border border-neutral-700 shadow p-5 rounded-lg hover:shadow-lg transition"
           >
-            <h3 className="text-xl text-blue-500 font-bold mb-1">{doc.name}</h3>
+            <h3 className="text-xl text-blue-500 font-bold mb-2">
+              {doc.doctorId?.name?.toUpperCase() || "UNKNOWN"}
+
+            </h3>
             <p className="text-gray-300 mb-1">
-              <strong>Specialization:</strong> {doc.specialization}
+              <strong>Specialization:</strong> {doc.specialization || "General"}
             </p>
             <p className="text-gray-300 mb-1">
-              <strong>Treats:</strong> {doc.diseases.join(', ')}
+              <strong>Experience:</strong> {doc.experience} years
+            </p>
+          
+            <p className="text-gray-300 mb-1">
+              <strong>Today's Availability:</strong>{" "}
+              {doc.availabeSlots?.length > 0
+                ? doc.availabeSlots.join(", ")
+                : "Not Available"}
             </p>
             <p className="text-blue-400 mb-3">
-              <strong>Fee:</strong> ₹{doc.fee}
+              <strong>Fee:</strong> ₹500 {/* static or dynamic */}
             </p>
             <button
-              className="w-full bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-600 transition"
+              className="w-full cursor-pointer bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-700 transition"
               onClick={() =>
-                navigate('/patient/book', {
+                navigate("/patient/book", {
                   state: {
                     doctor: {
-                      name: doc.name,
+                      id: doc._id,
+                      name: doc.doctorId?.name,
                       specialization: doc.specialization,
-                      fee: doc.fee,
+                      fee: 500,
+                      slots: doc.availabeSlots || [],
                     },
                   },
                 })

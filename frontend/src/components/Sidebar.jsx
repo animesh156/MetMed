@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import API from '../utils/api';
+import { toast } from "react-hot-toast";
 
 function Sidebar({ items }) {
   const navigate = useNavigate();
@@ -9,10 +10,12 @@ function Sidebar({ items }) {
     if (item.name === "Logout") {
       try {
         await API.get('/auth/logout',  {withCredentials: true}); // or whatever your logout endpoint is
+        toast.success("Logout successful");
       
         navigate(item.route); 
       } catch (error) {
         console.error("Logout failed:", error);
+        toast.error("Logout failed. Please try again.");
       }
     } else {
       navigate(item.route);

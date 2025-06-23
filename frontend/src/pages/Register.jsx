@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider, signInWithPopup } from "../firebase"; // 🔁 Adjust path
+import toast from "react-hot-toast";
+import API from "../utils/api"; // 🔁 Adjust path
 
 function Register() {
   const [role, setRole] = useState("patient");
@@ -11,10 +13,37 @@ function Register() {
 
   const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log({ role, name, email, password });
-    // TODO: Create user with email & password (if needed)
+    if (!name || !email || !password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    try {
+      const response = API.post(
+        "/auth/register",
+        {
+          name,
+          email,
+          password,
+          role,
+        },
+        {
+          withCredentials: true, // Ensure cookies are sent
+        }
+      );
+
+      if (response.status === 201) {
+        toast.success("Registration successful");
+        navigate("/login"); // Redirect to login after successful registration
+      } else {
+        toast.error("User already exist");
+      }
+    } catch (error) {
+      console.error("Registration Error:", error.message);
+      toast.error("Registration failed. Please try again.");
+    }
   };
 
   const handleGoogleSignup = async () => {
@@ -31,7 +60,7 @@ function Register() {
       });
 
       // Optionally: Send to backend to create user record with selected role
-      navigate("/dashboard"); // 👈 redirect as needed
+      navigate("/"); // 👈 redirect as needed
     } catch (error) {
       console.error("Google Signup Error:", error.message);
     }
@@ -51,7 +80,11 @@ function Register() {
               key={r}
               onClick={() => setRole(r)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition
-                ${role === r ? "bg-blue-600 text-white" : "bg-neutral-800 text-gray-400 hover:bg-neutral-700"}`}
+                ${
+                  role === r
+                    ? "bg-blue-600 text-white"
+                    : "bg-neutral-800 text-gray-400 hover:bg-neutral-700"
+                }`}
             >
               {r.charAt(0).toUpperCase() + r.slice(1)}
             </button>
@@ -61,7 +94,9 @@ function Register() {
         {/* Register Form */}
         <form onSubmit={handleRegister} className="space-y-6">
           <div>
-            <label className="block mb-2 text-sm text-gray-300">Full Name</label>
+            <label className="block mb-2 text-sm text-gray-300">
+              Full Name
+            </label>
             <input
               type="text"
               required

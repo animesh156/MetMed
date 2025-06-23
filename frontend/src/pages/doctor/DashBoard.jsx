@@ -2,17 +2,20 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdDashboard, MdCalendarToday, MdOutlineAttachMoney } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+
 
 function DoctorDashboard() {
   const navigate = useNavigate();
 
   const items = [
     { name: "Dashboard", icon: MdDashboard },
-    { name: "Appointments", icon: MdCalendarToday },
-    { name: "Earnings", icon: MdOutlineAttachMoney },
-    { name: "Settings", icon: IoSettingsOutline },
+    { name: "Appointments", icon: MdCalendarToday, route: "/doctor/schedule" },
+    { name: "Earnings", icon: MdOutlineAttachMoney, route: "/doctor/earning" },
+    { name: "Profile", icon: CgProfile, route: "/doctor/profile" },
+    { name: "Settings", icon: IoSettingsOutline, route: "/doctor/settings" },
     { name: "Logout", icon: FiLogOut, route: "/" }
   ];
 

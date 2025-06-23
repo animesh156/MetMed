@@ -179,7 +179,7 @@ function Home() {
           Our Medical Services
         </h1>
 
-        <p className="text-center mt-5 font-semibold text-2xl">
+        <p className="text-center text-white mt-5 font-semibold text-2xl">
           We provide comprehensive healthcare services with state-of-the-art
           facilities and experienced medical professionals across various
           specialties.
@@ -221,7 +221,7 @@ function Home() {
           Meet Our Expert Doctors
         </h1>
 
-        <p className="mt-8 text-xl font-semibold">
+        <p className="mt-8 text-white text-xl font-semibold">
           Our team of highly qualified doctors brings years of experience and
           dedication to providing exceptional healthcare services.
         </p>
@@ -257,7 +257,7 @@ function Home() {
         <h1 className="text-5xl text-blue-600 font-bold">
           Ready to Book Your Appointment?
         </h1>
-        <p className="text-xl mt-8 font-semibold">
+        <p className="text-xl text-white mt-8 font-semibold">
           Take the first step towards better health. Our easy booking system
           lets you schedule <br></br> appointments with our expert doctors in
           just a few clicks.
@@ -301,7 +301,7 @@ function Home() {
           Book Your Appointment Now
         </button>
 
-        <p className="text-sm md:text-base font-semibold">
+        <p className="text-sm text-white md:text-base font-semibold">
           🚨 Emergency: <span className="underline">(555) 911-HELP</span> | Or
           call us at: <span className="underline">(555) 123-4567</span>
         </p>

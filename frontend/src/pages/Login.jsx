@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { auth, googleProvider, signInWithPopup } from "../firebase"; // 👈 import firebase auth
 import { useNavigate, Link } from "react-router-dom"; // 👈 for navigation
-import API from '../utils/api'
+import API from "../utils/api";
+import toast from "react-hot-toast";
 
 function Login() {
   const [role, setRole] = useState("patient");
@@ -13,34 +14,31 @@ function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
-    if(!email || !password) {
-      alert("please enter required fields")
+
+    if (!email || !password) {
+      toast.alert("please enter required fields");
       return;
     }
 
     try {
+      const response = await API.post(
+        "/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
 
-       const response = await API.post('/auth/login', 
-      {email, password},
-      {withCredentials: true}
-    )
-
-    if(response.status === 200) {
-      if (role === "doctor") navigate("/doctor/dashboard");
-      else if (role === "admin") navigate("/admin/dashboard");
-      else navigate("/patient/dashboard");
-    }
-    else {
-      alert('server error')
-    }
-      
+      if (response.status === 200) {
+        toast.success("Login successful");
+        if (role === "doctor") navigate("/doctor/dashboard");
+        else if (role === "admin") navigate("/admin/dashboard");
+        else navigate("/patient/dashboard");
+      } else {
+        toast.error("Invalid credentials or user not found");
+      }
     } catch (error) {
-      console.log(error)
+      toast.error("server error");
+      console.log(error);
     }
-
-   
-    
   };
 
   const handleGoogleLogin = async () => {
@@ -53,13 +51,15 @@ function Login() {
       localStorage.setItem("role", role);
       localStorage.setItem("user", JSON.stringify(user));
 
+      toast.success("Google Sign-In successful");
+
       // ✅ Redirect based on role
       if (role === "doctor") navigate("/doctor/dashboard");
       else if (role === "admin") navigate("/admin/dashboard");
       else navigate("/patient/dashboard");
     } catch (error) {
       console.error("Google Sign-In Error:", error.message);
-      alert("Login failed. Try again.");
+      toast.error("Login failed. Try again.");
     }
   };
 
@@ -126,16 +126,18 @@ function Login() {
           <span className="border-t w-1/4 border-gray-600"></span>
         </div>
 
-        {/* Google Login Button */}
-        <button
-          onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-3 border border-gray-600 py-2 rounded hover:bg-neutral-800 transition"
-        >
-          <FcGoogle className="text-xl" />
-          <span className="text-sm text-white font-semibold">
-            Sign in with Google as {role}
-          </span>
-        </button>
+        {/* Google Login Button - only for patient & doctor */}
+        {role !== "admin" && (
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center justify-center gap-3 border border-gray-600 py-2 rounded hover:bg-neutral-800 transition"
+          >
+            <FcGoogle className="text-xl" />
+            <span className="text-sm text-white font-semibold">
+              Sign in with Google as {role}
+            </span>
+          </button>
+        )}
 
         <p className="text-sm text-center text-gray-400 mt-6">
           Don’t have an account?{" "}

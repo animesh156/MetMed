@@ -42,6 +42,47 @@ const addDoctorDetails = async (req, res) => {
   }
 };
 
+const updateDoctorDetails = async (req, res) => {
+  try {
+    const { experience, availabeSlots, email, password, specialization } =
+      req.body;
+
+    const doctor = await Doctor.findOne({ doctorId: req.user._id });
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor profile not found." });
+    }
+
+    if (experience) {
+      doctor.experience = experience;
+    }
+    if (availabeSlots) {
+      doctor.availabeSlots = availabeSlots;
+    }
+    if (specialization) {
+      doctor.specialization = specialization;
+    }
+    if (email) {
+      doctor.email = email;
+    }
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      doctor.password = hashedPassword;
+    }
+
+    await doctor.save();
+
+    return res.status(200).json({
+      message: "Doctor details updated successfully.",
+      doctor,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: "Server Error" });
+    console.log("error updating details", error);
+  }
+};
+
 // for adding doctor's earning
 const addEarning = async (req, res) => {
   try {
@@ -82,7 +123,53 @@ const addEarning = async (req, res) => {
   }
 };
 
+
+// // Fetching doctor profile with populated doctorId
+const getDoctorProfile = async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({ doctorId: req.user._id }).populate(
+      "doctorId",
+      "name email"
+    ); 
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor not found" });
+    }
+
+    res.json(doctor);
+  } catch (error) {
+    console.error("Error fetching doctor profile:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+const getAllDoctors = async (req, res) => {
+  try {
+    const doctors = await Doctor.find({})
+      .populate("doctorId", "name age email"); // include required user fields
+
+    if (!doctors || doctors.length === 0) {
+      return res.status(404).json({ error: "No doctors found" });
+    }
+
+    res.status(200).json(doctors);
+  } catch (error) {
+    console.error("Error fetching all doctors:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
+
+
+ 
+
 module.exports = {
   addDoctorDetails,
   addEarning,
+  updateDoctorDetails,
+  getDoctorProfile,
+  getAllDoctors
 };
