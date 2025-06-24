@@ -26,8 +26,10 @@ function Login() {
         { email, password },
         { withCredentials: true }
       );
-
+ 
       if (response.status === 200) {
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("role", response.data.role);
         toast.success("Login successful");
         if (role === "doctor") navigate("/doctor/dashboard");
         else if (role === "admin") navigate("/admin/dashboard");
@@ -45,21 +47,24 @@ function Login() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log("Google Sign-In Success:", user);
+      const token = await user.getIdToken();
 
-      // ✅ Store role in Firestore or localStorage if needed
-      localStorage.setItem("role", role);
-      localStorage.setItem("user", JSON.stringify(user));
+      const response = await API.post(
+        "/auth/firebase-login",
+        { token, role },
+        { withCredentials: true }
+      );
 
-      toast.success("Google Sign-In successful");
+       localStorage.setItem("name", response.data.name);
+        localStorage.setItem("role", response.data.role);
 
-      // ✅ Redirect based on role
+      toast.success("Signed in with Google");
       if (role === "doctor") navigate("/doctor/dashboard");
       else if (role === "admin") navigate("/admin/dashboard");
       else navigate("/patient/dashboard");
-    } catch (error) {
-      console.error("Google Sign-In Error:", error.message);
-      toast.error("Login failed. Try again.");
+    } catch (err) {
+      console.error(err);
+      toast.error("Google login failed");
     }
   };
 

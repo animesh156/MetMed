@@ -35,8 +35,12 @@ function Register() {
       );
 
       if (response.status === 201) {
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("role", response.data.role);
         toast.success("Registration successful");
-        navigate("/login"); // Redirect to login after successful registration
+        if (role === "doctor") navigate("/doctor/dashboard");
+        else if (role === "admin") navigate("/admin/dashboard");
+        else navigate("/patient/dashboard");
       } else {
         toast.error("User already exist");
       }
@@ -50,19 +54,24 @@ function Register() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      const token = await user.getIdToken();
 
-      console.log("Google Signup Success:", {
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName,
-        photoURL: user.photoURL,
-        role,
-      });
+      const response = await API.post(
+        "/auth/firebase-login",
+        { token, role },
+        { withCredentials: true }
+      );
 
-      // Optionally: Send to backend to create user record with selected role
-      navigate("/"); // 👈 redirect as needed
-    } catch (error) {
-      console.error("Google Signup Error:", error.message);
+      localStorage.setItem("name", response.data.name);
+      localStorage.setItem("role", response.data.role);
+
+      toast.success("Signed in with Google");
+      if (role === "doctor") navigate("/doctor/dashboard");
+      else if (role === "admin") navigate("/admin/dashboard");
+      else navigate("/patient/dashboard");
+    } catch (err) {
+      console.error(err);
+      toast.error("Google login failed");
     }
   };
 

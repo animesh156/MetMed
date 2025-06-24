@@ -127,17 +127,21 @@ const AppointmentHistory = async (req, res) => {
   try {
     const appointments = await Appointment.find({
       patientId: req.user._id,
-      status: "completed", // only show completed ones
+      status: "completed",
     })
-      .populate("doctorId", "name")
+      .populate({
+        path: "doctorId", // This refers to the Doctor model
+        populate: {
+          path: "doctorId", // This refers to the actual User
+          select: "name",   // Get the name from User
+        },
+      })
       .sort({ date: -1 });
 
     const history = appointments.map((appt) => ({
-      doctor: appt.doctorId.name,
+      doctor: appt.doctorId?.doctorId?.name || "Unknown",
       date: appt.date.toISOString().split("T")[0],
       time: appt.slot,
-      // diagnosis: appt.diagnosis || "N/A",       // optional fields
-      // prescription: appt.prescription || "N/A", // optional fields
     }));
 
     res.json(history);
@@ -146,6 +150,8 @@ const AppointmentHistory = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
 
 
 module.exports = {

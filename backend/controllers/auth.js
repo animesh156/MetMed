@@ -1,9 +1,10 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
+const admin = require("../config/fireBaseAdmin");
 
 const generateToken = (res,user) => {
-  const token = jwt.sign(
+  const token = jwt.sign( 
     {
       userId: user._id,
       role: user.role,
@@ -102,29 +103,44 @@ const loginUser = async (req, res) => {
   }
 };
 
+
+
 const firebaseLogin = async (req, res) => {
-  const { token } = req.body;
+  const { token, role } = req.body;
 
   try {
-    // ✅ Verify Firebase token
-    const decoded = await admin.auth().verifyIdToken(token);
 
-    const { email, name, role } = decoded;
+    if (!token) {
+      return res.status(400).json({ error: "Firebase token is required" });
+    }
+
+      const decoded = await admin.auth().verifyIdToken(token);
+
+    const { email, name} = decoded;
 
     if (!email) {
       return res.status(400).json({ error: "Invalid Firebase token" });
     }
 
-    // 🔍 Check if user already exists in DB
+    //  Check if user already exists in DB
     let user = await User.findOne({ email });
 
     if (!user) {
-      // 🔧 If not, create one
+      //  If not, create one
+
+       // 🔢 Generate 5-digit random password
+      const rawPassword = Math.floor(10000 + Math.random() * 90000).toString();
+
+      // 🔐 Hash it
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(rawPassword, salt);
+
+
       user = await User.create({
         name,
         email,
         role,
-        password: "", // leave empty for Firebase
+        password: hashedPassword, // leave empty for Firebase
       });
     }
 
