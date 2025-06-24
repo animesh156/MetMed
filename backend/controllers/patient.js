@@ -121,8 +121,36 @@ const upcomingAppointments = async (req, res) => {
   }
 };
 
+
+// routes/patient.js or similar
+const AppointmentHistory = async (req, res) => {
+  try {
+    const appointments = await Appointment.find({
+      patientId: req.user._id,
+      status: "completed", // only show completed ones
+    })
+      .populate("doctorId", "name")
+      .sort({ date: -1 });
+
+    const history = appointments.map((appt) => ({
+      doctor: appt.doctorId.name,
+      date: appt.date.toISOString().split("T")[0],
+      time: appt.slot,
+      // diagnosis: appt.diagnosis || "N/A",       // optional fields
+      // prescription: appt.prescription || "N/A", // optional fields
+    }));
+
+    res.json(history);
+  } catch (err) {
+    console.error("Error fetching history:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+
 module.exports = {
   updatePatient,
   bookAppointment,
-  upcomingAppointments
+  upcomingAppointments,
+  AppointmentHistory
 };

@@ -12,7 +12,7 @@ const doctorSchema = new mongoose.Schema({
   },
   experience: {
     type: Number,
-    required: true,
+    
     min: 0,
   },
   availabeSlots: {
@@ -21,7 +21,11 @@ const doctorSchema = new mongoose.Schema({
   isVerified: {
     type: Boolean,
     default: false,
-  }
+  },
+   fee: {
+    type: Number, // 💡 Add this field
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model('Doctor', doctorSchema);

@@ -8,20 +8,32 @@ function DoctorSettings() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [slots, setSlots] = useState(""); // Comma-separated string
+  const [fee, setFee] = useState(""); // New field
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if(!specialization && !experience && !email && !password && !slots) {
+    if (!specialization && !experience && !email && !password && !slots && !fee) {
       toast.error("Please fill at least one field to update.");
+      return;
     }
 
-    const availabeSlots = slots.split(",").map((s) => s.trim()).filter(Boolean);
+    const availabeSlots = slots
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     try {
       await API.put(
         "/doctor/update", // make sure this route exists in your backend
-        { specialization, experience, email, password, availabeSlots },
+        {
+          specialization,
+          experience,
+          email,
+          password,
+          availabeSlots,
+          fee,
+        },
         { withCredentials: true }
       );
       toast.success("Profile updated successfully");
@@ -56,6 +68,17 @@ function DoctorSettings() {
             className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={experience}
             onChange={(e) => setExperience(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-300 mb-1">Consultation Fee (₹)</label>
+          <input
+            type="number"
+            min="0"
+            className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
+            value={fee}
+            onChange={(e) => setFee(e.target.value)}
           />
         </div>
 

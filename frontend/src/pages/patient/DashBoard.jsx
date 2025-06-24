@@ -15,7 +15,7 @@ function DashBoard() {
     {
       name: "Appointments",
       icon: MdCalendarToday,
-      route: "/patient/appointment",
+      route: "/patient/appointments",
     },
     { name: "Doctors", icon: FaUserDoctor, route: "/patient/doctors" },
     { name: "Settings", icon: IoSettingsOutline, route: "/patient/settings" },
@@ -47,7 +47,7 @@ function DashBoard() {
             </h2>
             <button
               className="btn bg-yellow-400 text-white hover:bg-yellow-500 transition"
-              onClick={() => navigate("/patient/appointment")}
+              onClick={() => navigate("/patient/appointments")}
             >
               View Now
             </button>

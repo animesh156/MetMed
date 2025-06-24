@@ -25,6 +25,7 @@ import DoctorProfile from "./pages/doctor/Profile";
 import Payment from "./pages/patient/Payment";
 import AppointmentSuccess from "./pages/patient/AppointmentSuccess";
 import UpcomingAppointment from "./pages/patient/UpcomingAppointment";
+import Review from "./pages/patient/Review";
 
 function App() {
   return (
@@ -42,9 +43,10 @@ function App() {
         <Route path="/patient/history" element={<PatientHistory />} />
         <Route path="/patient/doctors" element={<AvailableDoctors />} />
         <Route path="/patient/settings" element={<PatientSetting />} />
-         <Route path="/patient/payment" element={<Payment />} />
-          <Route path="/patient/success" element={<AppointmentSuccess />} />
-             <Route path="/patient/appointments" element={<UpcomingAppointment />} />
+        <Route path="/patient/payment" element={<Payment />} />
+        <Route path="/patient/success" element={<AppointmentSuccess />} />
+        <Route path="/patient/appointments" element={<UpcomingAppointment />} />
+       <Route path="/patient/review/:appointmentId" element={<Review />} />
 
         <Route path="/admin/dashboard" element={<AdminDashBaord />} />
         <Route path="/admin/verify" element={<DoctorVerify />} />

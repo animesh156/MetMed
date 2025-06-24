@@ -4,7 +4,7 @@ const Doctor = require("../models/doctor");
 
 const bookAppointment = async (req, res) => {
   try {
-    const { doctorId, slot } = req.body;
+    const { doctorId, slot } = req.body; 
 
     if (!doctorId || !slot) {
       return res.status(400).json({ error: "Doctor and slot are required." });

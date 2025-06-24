@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import API from "../../utils/api";
 import Loader from "../../components/Loader";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function UpcomingAppointment() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -94,6 +96,56 @@ function UpcomingAppointment() {
               >
                 💳 <strong>Payment:</strong> {appt.paymentStatus}
               </p>
+
+              {/* ✅ Join Button */}
+              {appt.status === "confirmed" && appt.videoCallLink && (
+                <div className="mt-4 flex flex-col gap-2">
+                  <a
+                    href={appt.videoCallLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+                  >
+                    Join Video Call
+                  </a>
+
+                  <button
+                    onClick={async () => {
+                      try {
+                        await API.put(
+                          "doctor/update-status",
+                          { appointmentId: appt._id, status: "completed" },
+                          { withCredentials: true }
+                        );
+                        toast.success("Appointment completed!");
+
+                        // Optional: Update state
+                        setAppointments((prev) =>
+                          prev.map((a) =>
+                            a._id === appt._id
+                              ? { ...a, status: "completed" }
+                              : a
+                          )
+                        );
+
+                      navigate(`/patient/review/${appt._id}`, {
+  state: {
+    doctorId: appt.doctorId?._id, // or appt.doctorId?.doctorId depending on structure
+   
+  },
+});
+
+
+                      } catch (err) {
+                        toast.error("Failed to complete appointment");
+                      }
+                    }}
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition"
+                  >
+                    End Appointment
+                  </button>
+                </div>
+              )}
             </div>
           ))}
         </div>

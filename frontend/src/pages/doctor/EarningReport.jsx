@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import API from '../../utils/api'; // axios instance
+import Loader from '../../components/Loader';
+import toast from 'react-hot-toast';
 
 const EarningReport = () => {
-  const earnings = {
-    total: 84000,
-    month: 'June 2025',
-    consultations: [
-      { id: 1, patient: 'Ankit Sinha', date: '2025-06-01', amount: 800 },
-      { id: 2, patient: 'Sneha Roy', date: '2025-06-03', amount: 1000 },
-      { id: 3, patient: 'Ravi Kumar', date: '2025-06-05', amount: 1200 },
-      { id: 4, patient: 'Meena Singh', date: '2025-06-06', amount: 900 },
-    ],
-  };
+  const [earnings, setEarnings] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEarnings = async () => {
+      try {
+        const res = await API.get('/doctor/earnings-report', {
+          withCredentials: true,
+        });
+        console.log('Earnings data:', res.data);
+        setEarnings(res.data);
+      } catch (err) {
+        console.error('Failed to fetch earnings:', err);
+        toast.error('Failed to load earnings');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEarnings();
+  }, []);
+
+  if (loading) return <Loader />;
+
+  if (!earnings) return <p className="text-center text-white">No earnings found.</p>;
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
@@ -36,12 +54,12 @@ const EarningReport = () => {
           <tbody>
             {earnings.consultations.map((item, index) => (
               <tr
-                key={item.id}
+                key={item._id || index}
                 className="hover:bg-neutral-700 text-white transition"
               >
                 <td className="px-4 py-2 border border-neutral-700">{index + 1}</td>
                 <td className="px-4 py-2 border border-neutral-700">{item.patient}</td>
-                <td className="px-4 py-2 border border-neutral-700">{item.date}</td>
+                <td className="px-4 py-2 border border-neutral-700">{new Date(item.date).toDateString()}</td>
                 <td className="px-4 py-2 border border-neutral-700">₹{item.amount}</td>
               </tr>
             ))}

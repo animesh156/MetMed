@@ -11,7 +11,7 @@ function Profile() {
     const fetchDoctorProfile = async () => {
       try {
         const response = await API.get("/doctor/profile", { withCredentials: true });
-        console.log("Doctor profile response:", response.data);
+      
         setDoctor(response.data);
       } catch (err) {
         toast.error("Failed to fetch profile");

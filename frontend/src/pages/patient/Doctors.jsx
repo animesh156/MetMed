@@ -13,6 +13,7 @@ function Doctors() {
     const fetchDoctors = async () => {
       try {
         const response = await API.get("/doctor/all");
+        console.log("Available doctors:", response.data);
         setDoctors(response.data);
       } catch (error) {
         toast.error("Failed to load doctors");
@@ -57,7 +58,7 @@ function Doctors() {
                 : "Not Available"}
             </p>
             <p className="text-blue-400 mb-3">
-              <strong>Fee:</strong> ₹500 {/* static or dynamic */}
+              <strong>Fee:</strong> {doc.fee}{/* static or dynamic */}
             </p>
             <button
               className="w-full cursor-pointer bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-700 transition"
@@ -68,7 +69,7 @@ function Doctors() {
                       id: doc._id,
                       name: doc.doctorId?.name,
                       specialization: doc.specialization,
-                      fee: 500,
+                      fee:  doc.fee,
                       slots: doc.availabeSlots || [],
                     },
                   },
