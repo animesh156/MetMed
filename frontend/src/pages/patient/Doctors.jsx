@@ -29,8 +29,16 @@ function Doctors() {
   if (loading) return <Loader />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-blue-400 text-center mb-6">
+    <div className="max-w-6xl mx-auto p-6 relative">
+      {/* 🔙 Back button */}
+      <button
+        onClick={() => navigate("/patient/dashboard")}
+        className="absolute top-4 left-4 text-blue-500 hover:text-blue-700 font-medium"
+      >
+        ← Back
+      </button>
+
+      <h2 className="md:text-3xl font-bold text-blue-400 text-center mb-6">
         Available Doctors
       </h2>
 
@@ -42,7 +50,6 @@ function Doctors() {
           >
             <h3 className="text-xl text-blue-500 font-bold mb-2">
               {doc.doctorId?.name?.toUpperCase() || "UNKNOWN"}
-
             </h3>
             <p className="text-gray-300 mb-1">
               <strong>Specialization:</strong> {doc.specialization || "General"}
@@ -50,7 +57,6 @@ function Doctors() {
             <p className="text-gray-300 mb-1">
               <strong>Experience:</strong> {doc.experience} years
             </p>
-          
             <p className="text-gray-300 mb-1">
               <strong>Today's Availability:</strong>{" "}
               {doc.availabeSlots?.length > 0
@@ -58,7 +64,7 @@ function Doctors() {
                 : "Not Available"}
             </p>
             <p className="text-blue-400 mb-3">
-              <strong>Fee:</strong> {doc.fee}{/* static or dynamic */}
+              <strong>Fee:</strong> {doc.fee}
             </p>
             <button
               className="w-full cursor-pointer bg-violet-500 text-white py-2 px-4 rounded hover:bg-violet-700 transition"
@@ -69,7 +75,7 @@ function Doctors() {
                       id: doc._id,
                       name: doc.doctorId?.name,
                       specialization: doc.specialization,
-                      fee:  doc.fee,
+                      fee: doc.fee,
                       slots: doc.availabeSlots || [],
                     },
                   },

@@ -134,14 +134,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/doctor/availability"
           element={
             <ProtectedRoute allowedRoles={["doctor"]}>
               <DoctorAvailbility />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/doctor/earning"
           element={
@@ -150,14 +150,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/doctor/history"
           element={
             <ProtectedRoute allowedRoles={["doctor"]}>
               <DoctorHistory />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/doctor/settings"
           element={

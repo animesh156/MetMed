@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import API from "../../utils/api";
 import Loader from "../../components/Loader";
 import toast from "react-hot-toast";
@@ -6,6 +7,7 @@ import toast from "react-hot-toast";
 const Schedule = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -13,7 +15,6 @@ const Schedule = () => {
         const res = await API.get("/doctor/schedule", {
           withCredentials: true,
         });
-        console.log(res.data);
         setAppointments(res.data);
       } catch (err) {
         console.error("Error fetching appointments", err);
@@ -28,11 +29,9 @@ const Schedule = () => {
 
   const handleStatusChange = async (id, newStatus, fee) => {
     try {
-      // 1. Generate video call link if confirmed
       const videoCallLink =
         newStatus === "confirmed" ? `https://meet.jit.si/healthapp-${id}` : "";
 
-      // 2. Update appointment status (+ optional video link)
       await API.put(
         "/doctor/update-status",
         {
@@ -45,7 +44,6 @@ const Schedule = () => {
 
       toast.success(`Appointment ${newStatus}`);
 
-      // 3. Record earnings if confirmed
       if (newStatus === "confirmed") {
         await API.post(
           "/doctor/earnings",
@@ -55,11 +53,9 @@ const Schedule = () => {
           },
           { withCredentials: true }
         );
-
         toast.success("Earning recorded.");
       }
 
-      // 4. Update local state
       setAppointments((prev) =>
         prev.map((appt) =>
           appt._id === id ? { ...appt, status: newStatus, videoCallLink } : appt
@@ -75,6 +71,14 @@ const Schedule = () => {
 
   return (
     <div className="mx-auto p-6 bg-neutral-900 min-h-screen text-white">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate("/doctor/dashboard")}
+        className="mb-6 text-blue-400 hover:text-blue-500 transition"
+      >
+        ← Back 
+      </button>
+
       <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">
         Today's Appointments
       </h2>
@@ -92,9 +96,7 @@ const Schedule = () => {
                 <h3 className="text-xl font-semibold text-white">
                   {appointment.patientId?.name || "Unknown"}
                 </h3>
-                <span className="text-sm text-gray-400">
-                  {appointment.slot}
-                </span>
+                <span className="text-sm text-gray-400">{appointment.slot}</span>
               </div>
 
               <p className="text-gray-300 mb-1">Reason: {appointment.reason}</p>
@@ -116,19 +118,18 @@ const Schedule = () => {
                   appointment.status.slice(1)}
               </p>
 
-            {appointment.status === "confirmed" && appointment.videoCallLink && (
-  <div className="mt-4">
-    <a
-      href={appointment.videoCallLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
-    >
-      Join Video Call
-    </a>
-  </div>
-)}
-
+              {appointment.status === "confirmed" && appointment.videoCallLink && (
+                <div className="mt-4">
+                  <a
+                    href={appointment.videoCallLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
+                  >
+                    Join Video Call
+                  </a>
+                </div>
+              )}
 
               {appointment.status === "pending" && (
                 <div className="mt-4 flex gap-2">

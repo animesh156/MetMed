@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import API from '../../utils/api'; // axios instance
 import Loader from '../../components/Loader';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const EarningReport = () => {
   const [earnings, setEarnings] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEarnings = async () => {
@@ -13,7 +15,6 @@ const EarningReport = () => {
         const res = await API.get('/doctor/earnings-report', {
           withCredentials: true,
         });
-        console.log('Earnings data:', res.data);
         setEarnings(res.data);
       } catch (err) {
         console.error('Failed to fetch earnings:', err);
@@ -32,6 +33,14 @@ const EarningReport = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate('/doctor/dashboard')}
+        className="mb-4 text-blue-400 hover:text-blue-500 transition"
+      >
+        ← Back 
+      </button>
+
       <h2 className="text-3xl font-bold mb-4 text-white text-center">Earning Report</h2>
 
       {/* Total Earnings */}
@@ -59,7 +68,9 @@ const EarningReport = () => {
               >
                 <td className="px-4 py-2 border border-neutral-700">{index + 1}</td>
                 <td className="px-4 py-2 border border-neutral-700">{item.patient}</td>
-                <td className="px-4 py-2 border border-neutral-700">{new Date(item.date).toDateString()}</td>
+                <td className="px-4 py-2 border border-neutral-700">
+                  {new Date(item.date).toDateString()}
+                </td>
                 <td className="px-4 py-2 border border-neutral-700">₹{item.amount}</td>
               </tr>
             ))}

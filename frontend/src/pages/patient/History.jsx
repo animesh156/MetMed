@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import API from "../../utils/api";
 import Loader from "../../components/Loader";
+import { useNavigate } from "react-router-dom"; // 🆕 Import
 
 function History() {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // 🆕
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -27,8 +29,16 @@ function History() {
   if (loading) return <Loader />;
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-white text-center mb-6">
+    <div className="max-w-5xl mx-auto p-6 relative">
+      {/* 🔙 Back button */}
+      <button
+        onClick={() => navigate("/patient/dashboard")}
+        className="absolute top-4 left-4 text-blue-500 hover:text-blue-700 font-medium"
+      >
+        ← Back
+      </button>
+
+      <h2 className="md:text-3xl font-bold text-white text-center mb-6">
         Consultation History
       </h2>
 

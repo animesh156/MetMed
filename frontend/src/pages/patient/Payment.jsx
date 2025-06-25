@@ -42,7 +42,15 @@ function Payment() {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-neutral-800 p-6 rounded shadow text-white">
+    <div className="max-w-xl mx-auto mt-10 bg-neutral-800 p-6 rounded shadow text-white relative">
+      {/* 🔙 Back Button */}
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 left-4 text-blue-500 hover:text-blue-700 font-medium"
+      >
+        ← Back
+      </button>
+
       <h2 className="text-2xl font-bold mb-6 text-center text-blue-400">
         Payment Page
       </h2>

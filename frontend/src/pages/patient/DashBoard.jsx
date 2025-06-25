@@ -28,15 +28,19 @@ function DashBoard() {
 
   return (
     <div className="flex h-screen bg-neutral-900 text-white">
-      {/* Sidebar for md+ */}
+      {/* Sidebar for medium and up */}
       <div className="hidden md:block w-64 bg-neutral-950">
         <Sidebar items={items} />
       </div>
 
-      {/* Mobile Hamburger */}
+      {/* Mobile Top Navbar */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-neutral-950 p-4 border-b border-neutral-700">
-        <button onClick={() => setIsOpen(true)}>
-          <RxHamburgerMenu className="text-white text-2xl" />
+        <button onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
+            <IoMdClose className="text-white text-2xl" />
+          ) : (
+            <RxHamburgerMenu className="text-white text-2xl" />
+          )}
         </button>
         <h1 className="text-xl font-semibold">Welcome {name?.toUpperCase()}</h1>
         <div />
@@ -44,14 +48,15 @@ function DashBoard() {
 
       {/* Mobile Sidebar Drawer */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 bg-black bg-opacity-40 md:hidden">
+        <div className="fixed inset-0 z-40 flex md:hidden">
+          {/* Clickable overlay to close */}
+          <div
+            className="flex-1 bg-black bg-opacity-40"
+            onClick={() => setIsOpen(false)}
+          ></div>
+
+          {/* Sidebar panel */}
           <div className="w-64 h-full bg-neutral-950 p-5 shadow-lg">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-semibold">Menu</h2>
-              <button onClick={() => setIsOpen(false)}>
-                <IoMdClose className="text-white text-2xl" />
-              </button>
-            </div>
             <Sidebar items={items} onItemClick={handleRoute} />
           </div>
         </div>

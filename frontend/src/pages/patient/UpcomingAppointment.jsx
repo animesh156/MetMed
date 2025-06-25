@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 function UpcomingAppointment() {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const name = localStorage.getItem("name");
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -31,9 +33,17 @@ function UpcomingAppointment() {
   if (loading) return <Loader />;
 
   return (
-    <div className="p-6 min-h-screen max-w-5xl mx-auto">
-      <h1 className="text-3xl text-blue-400 font-bold mb-6 text-center">
-        My Upcoming Appointments
+    <div className="p-6 min-h-screen max-w-5xl mx-auto relative">
+      {/* 🔙 Back button at top-left */}
+       <button
+      onClick={() => navigate("/patient/dashboard")}
+      className="absolute top-4 left-4 cursor-pointer text-blue-500 hover:text-blue-700 font-medium"
+    >
+      ← Back
+    </button>
+
+      <h1 className="md:text-3xl  text-blue-400 font-bold mb-6 text-center">
+        {name} Upcoming Appointments
       </h1>
 
       {appointments.length === 0 ? (
@@ -97,7 +107,6 @@ function UpcomingAppointment() {
                 💳 <strong>Payment:</strong> {appt.paymentStatus}
               </p>
 
-              {/* ✅ Join Button */}
               {appt.status === "confirmed" && appt.videoCallLink && (
                 <div className="mt-4 flex flex-col gap-2">
                   <a
@@ -119,7 +128,6 @@ function UpcomingAppointment() {
                         );
                         toast.success("Appointment completed!");
 
-                        // Optional: Update state
                         setAppointments((prev) =>
                           prev.map((a) =>
                             a._id === appt._id
@@ -128,15 +136,13 @@ function UpcomingAppointment() {
                           )
                         );
 
-                      navigate(`/patient/review/${appt._id}`, {
-  state: {
-    doctorId: appt.doctorId?._id, // or appt.doctorId?.doctorId depending on structure
-   
-  },
-});
-
-
+                        navigate(`/patient/review/${appt._id}`, {
+                          state: {
+                            doctorId: appt.doctorId?._id,
+                          },
+                        });
                       } catch (err) {
+                        console.error("Error completing appointment:", err);
                         toast.error("Failed to complete appointment");
                       }
                     }}

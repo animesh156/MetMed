@@ -3,18 +3,16 @@ import { useNavigate } from "react-router-dom";
 import API from "../utils/api";
 import { toast } from "react-hot-toast";
 
-function Sidebar({ items }) {
+function Sidebar({ items, onItemClick }) {
   const navigate = useNavigate();
 
   const handleItemClick = async (item) => {
     if (item.name === "Logout") {
       try {
-        await API.get("/auth/logout", { withCredentials: true }); // or whatever your logout endpoint is
-
+        await API.get("/auth/logout", { withCredentials: true });
         localStorage.removeItem("name");
         localStorage.removeItem("role");
         toast.success("Logout successful");
-
         navigate(item.route);
       } catch (error) {
         console.error("Logout failed:", error);
@@ -22,6 +20,11 @@ function Sidebar({ items }) {
       }
     } else {
       navigate(item.route);
+    }
+
+    // Close sidebar if onItemClick provided (i.e., mobile)
+    if (onItemClick) {
+      onItemClick(item.route);
     }
   };
 
@@ -40,5 +43,6 @@ function Sidebar({ items }) {
     </ul>
   );
 }
+
 
 export default Sidebar;

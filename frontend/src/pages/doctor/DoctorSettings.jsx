@@ -1,14 +1,16 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import API from "../../utils/api"; // Make sure this is correct
+import API from "../../utils/api";
 
 function DoctorSettings() {
   const [specialization, setSpecialization] = useState("");
   const [experience, setExperience] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [slots, setSlots] = useState(""); // Comma-separated string
-  const [fee, setFee] = useState(""); // New field
+  const [slots, setSlots] = useState("");
+  const [fee, setFee] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ function DoctorSettings() {
 
     try {
       await API.put(
-        "/doctor/update", // make sure this route exists in your backend
+        "/doctor/update",
         {
           specialization,
           experience,
@@ -45,6 +47,14 @@ function DoctorSettings() {
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
+      {/* Back Button */}
+      <button
+        onClick={() => navigate("/doctor/dashboard")}
+        className="mb-6 text-blue-400 hover:text-blue-500 transition"
+      >
+        ← Back
+      </button>
+
       <h2 className="text-2xl font-bold mb-6 text-white text-center">
         Doctor Settings
       </h2>

@@ -1,4 +1,3 @@
-// src/pages/doctor/Dashboard.jsx
 import React, { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -24,12 +23,12 @@ function DoctorDashboard() {
     { name: "Earnings", icon: MdOutlineAttachMoney, route: "/doctor/earning" },
     { name: "Profile", icon: CgProfile, route: "/doctor/profile" },
     { name: "Settings", icon: IoSettingsOutline, route: "/doctor/settings" },
-    { name: "Logout", icon: FiLogOut, route: "/" }
+    { name: "Logout", icon: FiLogOut, route: "/" },
   ];
 
   const handleRoute = (route) => {
     navigate(route);
-    setIsOpen(false); // ✅ Close sidebar after clicking item
+    setIsOpen(false); // Close sidebar on mobile after navigation
   };
 
   return (
@@ -41,34 +40,38 @@ function DoctorDashboard() {
 
       {/* Mobile Header */}
       <div className="md:hidden fixed top-0 left-0 right-0 z-50 bg-neutral-950 border-b border-neutral-700 flex justify-between items-center p-4">
-        <button onClick={() => setIsOpen(true)}>
-          <RxHamburgerMenu className="text-white text-2xl" />
+        <button onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? (
+            <IoMdClose className="text-white text-2xl" />
+          ) : (
+            <RxHamburgerMenu className="text-white text-2xl" />
+          )}
         </button>
         <h1 className="text-lg font-bold truncate">Dr. {name?.toUpperCase()}</h1>
-        <div /> {/* spacer */}
+        <div /> {/* Spacer */}
       </div>
 
-      {/* Mobile Sidebar Overlay */}
+      {/* Mobile Sidebar Drawer */}
       {isOpen && (
         <div className="fixed inset-0 z-40 flex md:hidden">
-          {/* Sidebar */}
+          {/* Background overlay to close */}
+          <div
+            className="flex-1 bg-black bg-opacity-40"
+            onClick={() => setIsOpen(false)}
+          ></div>
+
+          {/* Sidebar panel */}
           <div className="w-64 h-full bg-neutral-950 p-5 shadow-lg">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-semibold">Menu</h2>
-              <button onClick={() => setIsOpen(false)}>
-                <IoMdClose className="text-white text-2xl" />
-              </button>
-            </div>
             <Sidebar items={items} onItemClick={handleRoute} />
           </div>
-          {/* Click outside to close */}
-          <div className="flex-1 bg-black bg-opacity-40" onClick={() => setIsOpen(false)} />
         </div>
       )}
 
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto pt-20 md:pt-6 p-6">
-        <h1 className="text-3xl font-bold text-blue-500 text-center mb-2">Doctor Dashboard</h1>
+        <h1 className="text-3xl font-bold text-blue-500 text-center mb-2">
+          Doctor Dashboard
+        </h1>
         <p className="text-center text-gray-400 mb-8">
           Welcome, Doctor! Manage appointments, consult patients, and track your performance.
         </p>
@@ -80,26 +83,20 @@ function DoctorDashboard() {
             btnText="View Schedule"
             onClick={() => navigate("/doctor/schedule")}
           />
-          <DashboardCard
-            title="Live Consultation"
-            text="Start a video session with your next patient."
-            btnText="Start Now"
-            onClick={() => alert("Implement video call route")}
-            bg="bg-green-600 hover:bg-green-700"
-          />
-          <DashboardCard
+         
+          {/* <DashboardCard
             title="Consultation History"
             text="Access past patient records and notes."
             btnText="View History"
             onClick={() => navigate("/doctor/history")}
-          />
-          <DashboardCard
+          /> */}
+          {/* <DashboardCard
             title="Set Availability"
             text="Update your weekly consultation slots."
             btnText="Update Slots"
             onClick={() => navigate("/doctor/availability")}
             bg="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold"
-          />
+          /> */}
           <DashboardCard
             title="My Earnings"
             text="₹84,000 earned this month"
@@ -114,11 +111,21 @@ function DoctorDashboard() {
 }
 
 // Reusable Card Component
-const DashboardCard = ({ title, text, btnText, onClick, bg = "bg-blue-600 hover:bg-blue-700", textColor = "text-white" }) => (
+const DashboardCard = ({
+  title,
+  text,
+  btnText,
+  onClick,
+  bg = "bg-blue-600 hover:bg-blue-700",
+  textColor = "text-white",
+}) => (
   <div className="bg-neutral-800 p-5 rounded shadow hover:shadow-md transition border border-neutral-700">
     <h2 className="text-xl font-semibold mb-3 text-white">{title}</h2>
     <p className="text-gray-400 mb-3">{text}</p>
-    <button className={`${bg} ${textColor} py-2 px-4 rounded transition`} onClick={onClick}>
+    <button
+      className={`${bg} ${textColor} py-2 px-4 rounded transition`}
+      onClick={onClick}
+    >
       {btnText}
     </button>
   </div>

@@ -1,8 +1,11 @@
-import  { useState } from "react";
+import { useState } from "react";
 import API from "../../utils/api";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function PatientSetting() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState("");
@@ -20,7 +23,7 @@ function PatientSetting() {
     try {
       await API.put(
         "/patient/update",
-        { name, email, age, gender, password }, // Include password here
+        { name, email, age, gender, password },
         { withCredentials: true }
       );
 
@@ -32,7 +35,15 @@ function PatientSetting() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow">
+    <div className="max-w-3xl mx-auto mt-10 p-6 bg-neutral-800 border border-neutral-700 rounded shadow relative">
+      {/* 🔙 Back Button */}
+      <button
+        onClick={() => navigate("/patient/dashboard")}
+        className="absolute top-4 left-4 text-blue-500 hover:text-blue-700 font-medium"
+      >
+        ← Back
+      </button>
+
       <h2 className="text-2xl font-bold mb-6 text-white text-center">
         Patient Settings
       </h2>
@@ -49,7 +60,6 @@ function PatientSetting() {
             className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={name}
             onChange={(e) => setName(e.target.value)}
-           
           />
         </div>
 
@@ -60,7 +70,6 @@ function PatientSetting() {
             className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-           
           />
         </div>
 
@@ -72,7 +81,6 @@ function PatientSetting() {
             className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            
           />
         </div>
 
@@ -82,11 +90,8 @@ function PatientSetting() {
             className="w-full px-4 py-2 rounded bg-neutral-900 text-white border border-neutral-600"
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-          
           >
-            <option value="" disabled>
-              Select Gender
-            </option>
+            <option value="" disabled>Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
