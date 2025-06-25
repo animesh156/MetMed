@@ -16,7 +16,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://met-med.vercel.app",
     credentials: true,
   })
 );
