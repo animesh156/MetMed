@@ -22,9 +22,7 @@ import Review from "./pages/patient/Review";
 // Doctor Pages
 import DoctorDashBaord from "./pages/doctor/DashBoard";
 import DoctorSchedule from "./pages/doctor/Schedule";
-import DoctorAvailbility from "./pages/doctor/Availability";
 import DoctorEarning from "./pages/doctor/EarningReport";
-import DoctorHistory from "./pages/doctor/History";
 import DoctorSettings from "./pages/doctor/DoctorSettings";
 import DoctorProfile from "./pages/doctor/Profile";
 
@@ -33,13 +31,23 @@ import AdminDashBaord from "./pages/admin/DashBoard";
 import DoctorVerify from "./pages/admin/DoctorVerification";
 import PatientList from "./pages/admin/PatientList";
 
+// Layouts
+import HomeLayout from "./components/HomeLayout"; // contains Navbar + ThemeToggle
+
 function App() {
   return (
     <Router>
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <HomeLayout>
+              <Home />
+            </HomeLayout>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
@@ -134,14 +142,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/doctor/availability"
-          element={
-            <ProtectedRoute allowedRoles={["doctor"]}>
-              <DoctorAvailbility />
-            </ProtectedRoute>
-          }
-        /> */}
         <Route
           path="/doctor/earning"
           element={
@@ -150,14 +150,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/doctor/history"
-          element={
-            <ProtectedRoute allowedRoles={["doctor"]}>
-              <DoctorHistory />
-            </ProtectedRoute>
-          }
-        /> */}
         <Route
           path="/doctor/settings"
           element={
