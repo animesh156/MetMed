@@ -1,20 +1,26 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRegHeart } from "react-icons/fa";
+import { useState } from "react";
+import {
+  FaRegHeart,
+  FaVideo,
+  FaPhoneAlt,
+  FaStar,
+  FaRegStar,
+} from "react-icons/fa";
 import { FaStethoscope } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa";
 import { PiBoneBold } from "react-icons/pi";
-import { MdChildCare } from "react-icons/md";
-import { CiCalendar } from "react-icons/ci";
-import { IoMdTime } from "react-icons/io";
-import { MdOutlineSecurity } from "react-icons/md";
-import { FaPhoneAlt } from "react-icons/fa";
-import CountUp from "react-countup";
-
-import Footer from "../components/Footer";
+import { MdChildCare, MdOutlineSecurity } from "react-icons/md";
+import { CiCalendar, CiStethoscope } from "react-icons/ci";
 import { LuBrain } from "react-icons/lu";
+import CountUp from "react-countup";
+import FadeIn from "../components/FadeIn";
+import Footer from "../components/Footer";
+import Testimonials from "../components/Testiomonials";
+import Navbar from "../components/Navbar";
 
 function Home() {
+ 
   const navigate = useNavigate();
 
   const doctors = [
@@ -22,15 +28,15 @@ function Home() {
       name: "Dr. John Doe",
       specialty: "Cardiology",
       image:
-        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZG9jdG9yfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000",
       description: "Experienced cardiologist with over 10 years in the field.",
-      rating: 4.8,
+      rating: 3.8,
     },
     {
       name: "Dr. Jane Smith",
       specialty: "Dermatology",
       image:
-        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZG9jdG9yfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000",
       description:
         "Expert in skin conditions with a patient-centered approach.",
       rating: 4.7,
@@ -39,9 +45,9 @@ function Home() {
       name: "Dr. Emily Johnson",
       specialty: "Pediatrics",
       image:
-        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZG9jdG9yfGVufDB8fDB8fHww",
+        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000",
       description: "Caring pediatrician dedicated to children's health.",
-      rating: 4.9,
+      rating: 2.7,
     },
   ];
 
@@ -50,46 +56,42 @@ function Home() {
       title: "Cardiology",
       description:
         "Comprehensive heart care and cardiovascular treatments from our expert cardiologists.",
-      icon: <FaRegHeart className=" text-red-600" />,
+      icon: <FaRegHeart className="text-red-600" />,
       color: "bg-red-600",
     },
-
     {
       title: "Ophthalmology",
       description:
-        "Complete eye care services including vision correction and eye surgery.",
-      icon: <FaRegEye className=" text-green-600" />,
+        "Comprehensive eye care services, from routine vision correction to advanced eye surgeries.",
+      icon: <FaRegEye className="text-green-600" />,
       color: "bg-green-600",
     },
-
     {
       title: "Pediatrics",
       description:
-        "Compassionate pediatric care focusing on the health and well-being of children from infancy to adolescence.",
-      icon: <MdChildCare className=" text-yellow-600" />,
+        "Compassionate pediatric care focusing on  health and well-being of children from infancy to adolescence.",
+      icon: <MdChildCare className="text-yellow-600" />,
       color: "bg-yellow-600",
     },
-
     {
       title: "Neurology",
       description:
         "Specialized care for neurological disorders, ensuring accurate diagnosis and effective treatment plans.",
-      icon: <LuBrain className=" text-blue-600" />,
+      icon: <LuBrain className="text-blue-600" />,
       color: "bg-blue-600",
     },
-
     {
       title: "Orthopedics",
       description:
         "Expert orthopedic services for bone, joint, and muscle health, including surgical and non-surgical options.",
-      icon: <PiBoneBold className=" text-orange-600" />,
+      icon: <PiBoneBold className="text-orange-600" />,
       color: "bg-orange-600",
     },
     {
       title: "Gynecology",
       description:
         "Comprehensive gynecological care, including routine check-ups, prenatal care, and specialized treatments.",
-      icon: <FaStethoscope className=" text-purple-600" />,
+      icon: <FaStethoscope className="text-purple-600" />,
       color: "bg-purple-600",
     },
   ];
@@ -99,214 +101,279 @@ function Home() {
       title: "Easy Appointment Booking",
       description:
         "Schedule appointments with just a few clicks, anytime, anywhere.",
-      icon: <CiCalendar className=" text-blue-600" />,
+      icon: <CiCalendar className="text-blue-600" />,
       color: "bg-blue-600",
     },
     {
-      title: "Telemedicine Consultations",
-      description:
-        "Consult with certified doctors via secure video calls from the comfort of your home.",
-      icon: <IoMdTime className=" text-green-600" />,
+      title: "Video Consultations",
+      description: "Consult doctors securely from home via video call.",
+      icon: <FaVideo className="text-green-600" />,
       color: "bg-green-600",
     },
     {
       title: "Health Records Management",
       description:
         "Access and manage your health records securely and conveniently.",
-      icon: <MdOutlineSecurity className=" text-yellow-600" />,
+      icon: <MdOutlineSecurity className="text-yellow-600" />,
       color: "bg-yellow-600",
     },
     {
       title: "24/7 Support",
-      description:
-        "Get assistance anytime with our dedicated support team available around the clock.",
-      icon: <FaPhoneAlt className=" text-red-600" />,
+      description: "Get help anytime from our 24/7 support team.",
+      icon: <FaPhoneAlt className="text-red-600" />,
       color: "bg-red-600",
+    },
+    {
+      title: "Review System",
+      description:
+        "Transparent rating and review system to build trust and improve care quality",
+      icon: <FaStar className="text-yellow-500" />,
+      color: "bg-yellow-500",
+    },
+  ];
+
+  const steps = [
+    {
+      id: 1,
+      title: "Create Account",
+      description:
+        "Sign up as a patient or doctor with our secure authentication system",
+    },
+    {
+      id: 2,
+      title: "Book or Accept",
+      description:
+        "Patients book appointments, doctors manage their availability and accept bookings",
+    },
+    {
+      id: 3,
+      title: "Connect & Care",
+      description:
+        "Join secure video consultations and provide or receive quality healthcare",
     },
   ];
 
   return (
-    <div className="min-h-screen  dark:text-white flex flex-col items-center justify-center px-6 py-12">
-      <div className="h-dvh m-auto flex flex-col items-center justify-center">
-        <h1 className="text-4xl md:text-6xl text-white font-extrabold text-center mb-6">
-          Welcome to <span className="text-blue-600">MetMed</span>
-        </h1>
+    <div className=" dark:bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-x-hidden">
+     
 
-        <p className="text-lg md:text-xl text-center max-w-2xl text-gray-300 mb-10">
-          Experience world-class healthcare with our team of expert doctors.
-          Book appointments online and get the care you deserve.
-        </p>
+      {/* Hero section */}
+      <section className="h-dvh mt-12  flex flex-col items-center justify-center">
+        <FadeIn direction="right">
+          <h1 className="text-4xl md:text-6xl text-gray-100 font-bold tracking-tight text-center">
+            Healthcare Made <span>Simple</span> &{" "}
+            <span className="text-primary">Accessible</span>
+          </h1>
+        </FadeIn>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap justify-center gap-6 mb-14">
-          <button
-            onClick={() => navigate("/login")}
-            className="bg-blue-600 hover:bg-blue-700 cursor-pointer text-white font-semibold px-6 py-3 rounded-md shadow-md transition"
-          >
-            Book an Appointment
-          </button>
-        
-        </div>
+        <FadeIn direction="left">
+          <p className="text-lg md:text-xl mt-7 text-center max-w-2xl text-gray-300 mb-10">
+            Connect with verified doctors through secure video consultations.
+            Book appointments, track earnings, and manage your healthcare
+            journey all in one platform.
+          </p>
+        </FadeIn>
 
-        {/* Stats with Icons */}
-        <div className="flex flex-wrap justify-center gap-8 mt-4">
-          <div className=" bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
-            <MdOutlineSecurity className="text-4xl text-blue-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">
-              <CountUp end={25} duration={2} />+
-            </h3>
-            <p className="dark:text-gray-400">Certified Doctors</p>
-          </div>
-
-          <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
-            <FaRegHeart className="text-4xl text-red-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">
-              <CountUp end={1200} duration={2} />+
-            </h3>
-            <p className="dark:text-gray-400">Happy Patients</p>
-          </div>
-
-          <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
-            <CiCalendar className="text-4xl text-green-500 mx-auto mb-2" />
-            <h3 className="text-xl font-bold text-white">24/7</h3>
-            <p className="dark:text-gray-400">Availability</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-20">
-        <h1 className="text-center text-blue-600 font-bold text-4xl">
-          Our Medical Services
-        </h1>
-
-        <p className="text-center text-white mt-5 font-semibold text-2xl">
-          We provide comprehensive healthcare services with state-of-the-art
-          facilities and experienced medical professionals across various
-          specialties.
-        </p>
-
-        <div className="flex flex-wrap gap-5 justify-center mt-8 mb-12">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              className="relative group w-80 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden"
+        <FadeIn direction="up">
+          <div className="flex gap-5 justify-center mb-14">
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-gray-100 hover:bg-gray-200 active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
             >
-              {/* Fill bar at the bottom */}
-              <div
-                className={`
-        absolute bottom-0 left-0 h-1 w-0 
-        ${service.color}
-        transition-all duration-500 ease-in-out 
-        group-hover:w-full`}
-              />
-
-              <div className="relative z-10 p-6">
-                <div className="flex justify-center items-center mb-4">
-                  <span className="text-3xl text-blue-300 mr-2">
-                    {service.icon}
-                  </span>
-                </div>
-                <h2 className="text-center text-xl font-semibold text-blue-400">
-                  {service.title}
-                </h2>
-                <p className="text-white">{service.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-32 mb-6 text-center">
-        <h1 className="text-4xl text-blue-600 font-bold">
-          Meet Our Expert Doctors
-        </h1>
-
-        <p className="mt-8 text-white text-xl font-semibold">
-          Our team of highly qualified doctors brings years of experience and
-          dedication to providing exceptional healthcare services.
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-8 mt-10">
-          {doctors.map((doctor, index) => (
-            <div
-              key={index}
-              className="bg-neutral-800 w-80 p-6 rounded-lg shadow-md mt-8"
+              Book Consultation <CiCalendar className="text-xl" />
+            </button>
+            <button
+              onClick={() => navigate("/login")}
+              className="bg-neutral-800 hover:bg-neutral-700 text-white active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
             >
-              <img
-                src={doctor.image}
-                alt={doctor.name}
-                className="w-full h-48 object-cover rounded-md mb-4"
-              />
-              <h3 className="text-xl text-blue-600 font-semibold mb-2">
-                {doctor.name}
+              Join as Doctor <CiStethoscope className="text-xl" />
+            </button>
+          </div>
+        </FadeIn>
+
+        <FadeIn direction="up">
+          <div className="flex flex-wrap justify-center gap-8 mt-4">
+            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+              <MdOutlineSecurity className="text-4xl text-blue-500 mx-auto mb-2" />
+              <h3 className="text-xl font-bold text-white">
+                <CountUp end={30} duration={2} />+
               </h3>
-              <p className=" mb-2">{doctor.specialty}</p>
-              <p className="text-gray-300 mb-4">{doctor.description}</p>
-              <div className="flex items-center">
-                <span className="text-yellow-400 font-bold mr-2">
-                  {doctor.rating}
-                </span>
-                <span className="text-gray-500">★ ★ ★ ★ ★</span>
-              </div>
+              <p className="text-gray-400">Certified Doctors</p>
             </div>
+
+            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+              <FaRegHeart className="text-4xl text-red-500 mx-auto mb-2" />
+              <h3 className="text-xl font-bold text-white">
+                <CountUp end={1200} duration={2} />+
+              </h3>
+              <p className="text-gray-400">Happy Patients</p>
+            </div>
+
+            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+              <CiCalendar className="text-4xl text-green-500 mx-auto mb-2" />
+              <h3 className="text-xl font-bold text-white">24/7</h3>
+              <p className="text-gray-400">Availability</p>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
+      {/* Services */}
+      <section className="mt-20" id="services">
+        <FadeIn direction="left">
+          <h2 className="text-center text-white font-bold text-5xl">
+            Our Medical Services
+          </h2>
+          <p className="mx-auto max-w-[400px] text-gray-400 mt-5 font-semibold text-lg text-center">
+            We provide comprehensive healthcare services with experienced
+            professionals.
+          </p>
+        </FadeIn>
+
+        <div className="flex flex-wrap justify-center mt-8 mb-12">
+          {services.map((service, index) => (
+            <FadeIn direction="left" key={index}>
+              <div className="w-80 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden relative group">
+                <div
+                  className={`absolute bottom-0 left-0 h-1 w-0 ${service.color} transition-all duration-500 group-hover:w-full`}
+                />
+                <div className="relative z-10 p-6">
+                  <div className="flex justify-center items-center mb-4">
+                    {service.icon}
+                  </div>
+                  <h2 className="text-xl font-semibold text-blue-400 text-center">
+                    {service.title}
+                  </h2>
+                  <p className="text-white text-center">
+                    {service.description}
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
           ))}
         </div>
-      </div>
+      </section>
 
-      <div className="text-center mt-40">
-        <h1 className="text-5xl text-blue-600 font-bold">
-          Ready to Book Your Appointment?
-        </h1>
-        <p className="text-xl text-white mt-8 font-semibold">
-          Take the first step towards better health. Our easy booking system
-          lets you schedule <br></br> appointments with our expert doctors in
-          just a few clicks.
-        </p>
+      <section id="how-it-works" className="py-20 bg-neutral-900">
+        <div className="container">
+          {/* Heading */}
+          <FadeIn direction="left" className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl text-white md:text-4xl font-bold">
+              Simple Steps to Better Healthcare
+            </h2>
+            <p className="text-xl text-gray-400 text-muted-foreground max-w-[600px] mx-auto">
+              Get started with our platform in just a few easy steps
+            </p>
+          </FadeIn>
+
+          {/* Steps */}
+          <div className="grid md:grid-cols-3 gap-8">
+            {steps.map((step) => (
+              <FadeIn
+                direction="up"
+                key={step.id}
+                className="text-center space-y-4"
+              >
+                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold mx-auto">
+                  {step.id}
+                </div>
+                <h3 className="text-xl text-white font-semibold">
+                  {step.title}
+                </h3>
+                <p className="text-gray-400">{step.description}</p>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features */}
+      <section className="text-center mt-40" id="features">
+        <FadeIn direction="right">
+          <h2 className="text-4xl text-white font-bold">
+            Everything You Need for Modern Healthcare
+          </h2>
+          <p className="text-xl mx-auto max-w-[600px] text-gray-400 mt-8 font-semibold">
+            Our platform offers everything needed for seamless healthcare
+            delivery.
+          </p>
+        </FadeIn>
 
         <div className="flex flex-wrap justify-center gap-6 mt-8 mb-12">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="relative group w-72 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden"
-            >
-              {/* Bottom fill animation bar */}
-              <div
-                className={
-`  absolute bottom-0 left-0 h-1 w-0 
-        ${feature.color}
-        transition-all duration-500 ease-in-out 
-        group-hover:w-full`
-                }
-      
-      
-              />
-
-              {/* Content goes above the animated bar */}
-              <div className="relative z-10 p-6">
-                <div className="flex justify-center items-center mb-4">
-                  <span className="text-3xl text-blue-600 mr-2">
+            <FadeIn direction="right" key={index}>
+              <div className="relative group w-80 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden">
+                <div
+                  className={`absolute bottom-0 left-0 h-1 w-0 ${feature.color} transition-all duration-500 group-hover:w-full`}
+                />
+                <div className="p-6">
+                  <div className="flex justify-center items-start mb-4">
                     {feature.icon}
-                  </span>
+                  </div>
+                  <h2 className="text-xl font-semibold text-white">
+                    {feature.title}
+                  </h2>
+                  <p className="text-gray-400 mt-2">{feature.description}</p>
                 </div>
-                <h2 className="text-center text-xl font-semibold text-blue-600">
-                  {feature.title}
-                </h2>
-                <p className="text-white">{feature.description}</p>
               </div>
-            </div>
+            </FadeIn>
           ))}
         </div>
 
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-md shadow-md transition mb-10">
-          Book Your Appointment Now
-        </button>
+        <FadeIn direction="right">
+          <button
+            onClick={() => navigate("/login")}
+            className="bg-gray-100 mx-auto hover:bg-gray-200 font-semibold px-6 py-3 rounded-md shadow-md flex items-center gap-2"
+          >
+            Book Consultation <CiCalendar className="text-xl" />
+          </button>
+        </FadeIn>
+      </section>
 
-        <p className="text-sm text-white md:text-base font-semibold">
-          🚨 Emergency: <span className="underline">(555) 911-HELP</span> | Or
-          call us at: <span className="underline">(555) 123-4567</span>
-        </p>
-      </div>
+      {/* Doctors */}
+      <section className="mt-32 mb-6 text-center">
+        <FadeIn direction="left">
+          <h1 className="text-4xl text-white font-bold">
+            Meet Our Expert Doctors
+          </h1>
+          <p className="mt-6 text-gray-400 max-w-[600px] mx-auto text-xl font-semibold">
+            Our team of doctors brings years of experience and care.
+          </p>
+        </FadeIn>
 
+        <div className="flex flex-wrap justify-center gap-8 mt-10">
+          {doctors.map((doctor, index) => (
+            <FadeIn direction="left" key={index}>
+              <div className="bg-neutral-800 w-80 p-6 rounded-lg shadow-md mt-8">
+                <img
+                  src={doctor.image}
+                  alt={doctor.name}
+                  className="w-full h-48 object-cover rounded-md mb-4"
+                />
+                <h3 className="text-xl text-white font-semibold mb-2">
+                  {doctor.name}
+                </h3>
+                <p className="text-gray-200 text-sm mb-2">{doctor.specialty}</p>
+                <p className="text-gray-400 mb-4">{doctor.description}</p>
+                <div className="flex items-center justify-center">
+                  <span className="text-yellow-500 font-bold mr-2">
+                    {doctor.rating.toFixed(1)}
+                  </span>
+                  {[...Array(5)].map((_, i) =>
+                    i < Math.round(doctor.rating) ? (
+                      <FaStar key={i} className="text-yellow-400 text-sm" />
+                    ) : (
+                      <FaRegStar key={i} className="text-yellow-400 text-sm" />
+                    )
+                  )}
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+
+      <Testimonials />
       <Footer />
     </div>
   );
