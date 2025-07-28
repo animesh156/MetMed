@@ -10,7 +10,7 @@ function Footer() {
   return (
     <>
       {/* Top Footer Section */}
-      <footer className="dark:bg-neutral-900  text-white px-6 sm:px-10 py-16">
+      <footer className="dark:bg-neutral-900 mt-20 text-white px-6 sm:px-10 py-16">
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
           {/* Services */}
           <div>
