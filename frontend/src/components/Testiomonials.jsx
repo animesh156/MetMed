@@ -28,7 +28,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-20 scroll-mt-12 h-dvh dark:bg-neutral-900 bg-gray-50">
+    <section id="testimonials" className="py-20 scroll-mt-12  dark:bg-neutral-900 bg-gray-50">
       <div className="container mx-auto px-4">
         <FadeIn direction="right" className="text-center space-y-4 mb-14">
 
