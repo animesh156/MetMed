@@ -18,9 +18,9 @@ import FadeIn from "../components/FadeIn";
 import Footer from "../components/Footer";
 import Testimonials from "../components/Testiomonials";
 import Navbar from "../components/Navbar";
+import Pricing from "../components/Pricing";
 
 function Home() {
- 
   const navigate = useNavigate();
 
   const doctors = [
@@ -126,7 +126,7 @@ function Home() {
     {
       title: "Review System",
       description:
-        "Transparent rating and review system to build trust and improve care quality",
+        "Transparent rating & review system to build trust and improve care quality",
       icon: <FaStar className="text-yellow-500" />,
       color: "bg-yellow-500",
     },
@@ -154,20 +154,18 @@ function Home() {
   ];
 
   return (
-    <div className=" dark:bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 overflow-x-hidden">
-     
-
+    <div className="bg-white dark:bg-neutral-950  dark:bg-background/95 dark:backdrop-blur dark:supports-[backdrop-filter]:bg-background/60 overflow-x-hidden">
       {/* Hero section */}
-      <section className="h-dvh mt-12  flex flex-col items-center justify-center">
+      <section className="h-dvh mt-12  flex flex-col items-center justify-center" id="hero">
         <FadeIn direction="right">
-          <h1 className="text-4xl md:text-6xl text-gray-100 font-bold tracking-tight text-center">
+          <h1 className="text-4xl md:text-6xl dark:text-gray-100 font-bold tracking-tight text-center">
             Healthcare Made <span>Simple</span> &{" "}
             <span className="text-primary">Accessible</span>
           </h1>
         </FadeIn>
 
         <FadeIn direction="left">
-          <p className="text-lg md:text-xl mt-7 text-center max-w-2xl text-gray-300 mb-10">
+          <p className="text-lg md:text-xl mt-7 text-center max-w-2xl text-gray-500 dark:text-gray-300 mb-10">
             Connect with verified doctors through secure video consultations.
             Book appointments, track earnings, and manage your healthcare
             journey all in one platform.
@@ -184,7 +182,7 @@ function Home() {
             </button>
             <button
               onClick={() => navigate("/login")}
-              className="bg-neutral-800 hover:bg-neutral-700 text-white active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
+              className="dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:border-0 border border-gray-300 dark:text-white active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
             >
               Join as Doctor <CiStethoscope className="text-xl" />
             </button>
@@ -193,26 +191,28 @@ function Home() {
 
         <FadeIn direction="up">
           <div className="flex flex-wrap justify-center gap-8 mt-4">
-            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+            <div className="dark:bg-neutral-800 dark:border-0 border border-gray-300  text-center rounded-lg px-6 py-5 shadow-md">
               <MdOutlineSecurity className="text-4xl text-blue-500 mx-auto mb-2" />
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="text-xl font-bold dark:text-white">
                 <CountUp end={30} duration={2} />+
               </h3>
-              <p className="text-gray-400">Certified Doctors</p>
+              <p className="dark:text-gray-400 text-gray-600">
+                Certified Doctors
+              </p>
             </div>
 
-            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+            <div className="dark:bg-neutral-800 dark:border-0  border border-gray-300  text-center rounded-lg px-6 py-5 shadow-md">
               <FaRegHeart className="text-4xl text-red-500 mx-auto mb-2" />
-              <h3 className="text-xl font-bold text-white">
+              <h3 className="text-xl font-bold dark:text-white">
                 <CountUp end={1200} duration={2} />+
               </h3>
-              <p className="text-gray-400">Happy Patients</p>
+              <p className="dark:text-gray-400 text-gray-600">Happy Patients</p>
             </div>
 
-            <div className="bg-neutral-800 text-center rounded-lg px-6 py-5 shadow-md">
+            <div className="dark:bg-neutral-800 dark:border-0  border border-gray-300 text-center rounded-lg px-6 py-5 shadow-md">
               <CiCalendar className="text-4xl text-green-500 mx-auto mb-2" />
-              <h3 className="text-xl font-bold text-white">24/7</h3>
-              <p className="text-gray-400">Availability</p>
+              <h3 className="text-xl font-bold dark:text-white">24/7</h3>
+              <p className="dark:text-gray-400 text-gray-600">Availability</p>
             </div>
           </div>
         </FadeIn>
@@ -221,10 +221,10 @@ function Home() {
       {/* Services */}
       <section className="mt-20" id="services">
         <FadeIn direction="left">
-          <h2 className="text-center text-white font-bold text-5xl">
+          <h2 className="text-center dark:text-white font-bold text-5xl">
             Our Medical Services
           </h2>
-          <p className="mx-auto max-w-[400px] text-gray-400 mt-5 font-semibold text-lg text-center">
+          <p className="mx-auto max-w-[400px] text-gray-500 dark:text-gray-400 mt-5 font-semibold text-lg text-center">
             We provide comprehensive healthcare services with experienced
             professionals.
           </p>
@@ -233,7 +233,7 @@ function Home() {
         <div className="flex flex-wrap justify-center mt-8 mb-12">
           {services.map((service, index) => (
             <FadeIn direction="left" key={index}>
-              <div className="w-80 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden relative group">
+              <div className="w-80 m-4 dark:bg-neutral-900 dark:border-0 border border-gray-300 rounded-lg shadow-xl overflow-hidden relative group">
                 <div
                   className={`absolute bottom-0 left-0 h-1 w-0 ${service.color} transition-all duration-500 group-hover:w-full`}
                 />
@@ -241,10 +241,10 @@ function Home() {
                   <div className="flex justify-center items-center mb-4">
                     {service.icon}
                   </div>
-                  <h2 className="text-xl font-semibold text-blue-400 text-center">
+                  <h2 className="text-xl font-semibold dark:text-white text-center">
                     {service.title}
                   </h2>
-                  <p className="text-white text-center">
+                  <p className="dark:text-white text-gray-500 text-center">
                     {service.description}
                   </p>
                 </div>
@@ -254,14 +254,18 @@ function Home() {
         </div>
       </section>
 
-      <section id="how-it-works" className="py-20 bg-neutral-900">
+      {/* How it works */}
+      <section
+        id="how-it-works"
+        className="py-20 h-dvh scroll-mt-12 bg-slate-50 dark:bg-neutral-900"
+      >
         <div className="container">
           {/* Heading */}
           <FadeIn direction="left" className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl text-white md:text-4xl font-bold">
+            <h2 className="text-3xl dark:text-white md:text-4xl font-bold">
               Simple Steps to Better Healthcare
             </h2>
-            <p className="text-xl text-gray-400 text-muted-foreground max-w-[600px] mx-auto">
+            <p className="text-xl dark:text-gray-400 text-muted-foreground max-w-[600px] mx-auto">
               Get started with our platform in just a few easy steps
             </p>
           </FadeIn>
@@ -274,13 +278,15 @@ function Home() {
                 key={step.id}
                 className="text-center space-y-4"
               >
-                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center text-2xl font-bold mx-auto">
+                <div className="w-16 h-16 rounded-full text-white dark:text-black bg-black dark:bg-white flex items-center justify-center text-2xl font-bold mx-auto">
                   {step.id}
                 </div>
-                <h3 className="text-xl text-white font-semibold">
+                <h3 className="text-xl dark:text-white font-semibold">
                   {step.title}
                 </h3>
-                <p className="text-gray-400">{step.description}</p>
+                <p className="dark:text-gray-400 text-gray-500">
+                  {step.description}
+                </p>
               </FadeIn>
             ))}
           </div>
@@ -288,12 +294,12 @@ function Home() {
       </section>
 
       {/* Features */}
-      <section className="text-center mt-40" id="features">
+      <section className="text-center mt-40 scroll-mt-28" id="features">
         <FadeIn direction="right">
-          <h2 className="text-4xl text-white font-bold">
+          <h2 className="text-4xl dark:text-white font-bold">
             Everything You Need for Modern Healthcare
           </h2>
-          <p className="text-xl mx-auto max-w-[600px] text-gray-400 mt-8 font-semibold">
+          <p className="text-xl mx-auto max-w-[600px] dark:text-gray-400 text-gray-500 mt-8 font-semibold">
             Our platform offers everything needed for seamless healthcare
             delivery.
           </p>
@@ -302,7 +308,7 @@ function Home() {
         <div className="flex flex-wrap justify-center gap-6 mt-8 mb-12">
           {features.map((feature, index) => (
             <FadeIn direction="right" key={index}>
-              <div className="relative group w-80 m-4 bg-neutral-900 rounded-lg shadow-xl overflow-hidden">
+              <div className="relative group w-80 m-4 dark:bg-neutral-900 dark:border-0 border border-gray-300 rounded-lg shadow-xl overflow-hidden">
                 <div
                   className={`absolute bottom-0 left-0 h-1 w-0 ${feature.color} transition-all duration-500 group-hover:w-full`}
                 />
@@ -310,10 +316,12 @@ function Home() {
                   <div className="flex justify-center items-start mb-4">
                     {feature.icon}
                   </div>
-                  <h2 className="text-xl font-semibold text-white">
+                  <h2 className="text-xl font-semibold dark:text-white">
                     {feature.title}
                   </h2>
-                  <p className="text-gray-400 mt-2">{feature.description}</p>
+                  <p className="dark:text-gray-400 text-gray-500 mt-2">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
             </FadeIn>
@@ -330,13 +338,16 @@ function Home() {
         </FadeIn>
       </section>
 
+      {/* Pricing */}
+      <Pricing />
+
       {/* Doctors */}
-      <section className="mt-32 mb-6 text-center">
+      <section className="mt-32 mb-6 text-center ">
         <FadeIn direction="left">
-          <h1 className="text-4xl text-white font-bold">
+          <h1 className="text-4xl dark:text-white font-bold">
             Meet Our Expert Doctors
           </h1>
-          <p className="mt-6 text-gray-400 max-w-[600px] mx-auto text-xl font-semibold">
+          <p className="mt-6 dark:text-gray-400 text-gray-500 max-w-[600px] mx-auto text-xl font-semibold">
             Our team of doctors brings years of experience and care.
           </p>
         </FadeIn>
@@ -344,17 +355,21 @@ function Home() {
         <div className="flex flex-wrap justify-center gap-8 mt-10">
           {doctors.map((doctor, index) => (
             <FadeIn direction="left" key={index}>
-              <div className="bg-neutral-800 w-80 p-6 rounded-lg shadow-md mt-8">
+              <div className="dark:bg-neutral-800 dark:border-0 border border-gray-300 w-80 p-6 rounded-lg shadow-md mt-8">
                 <img
                   src={doctor.image}
                   alt={doctor.name}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
-                <h3 className="text-xl text-white font-semibold mb-2">
+                <h3 className="text-xl dark:text-white font-semibold mb-2">
                   {doctor.name}
                 </h3>
-                <p className="text-gray-200 text-sm mb-2">{doctor.specialty}</p>
-                <p className="text-gray-400 mb-4">{doctor.description}</p>
+                <p className="dark:text-gray-200 text-gray-500 text-sm mb-2">
+                  {doctor.specialty}
+                </p>
+                <p className="dark:text-gray-400 text-gray-600 mb-4">
+                  {doctor.description}
+                </p>
                 <div className="flex items-center justify-center">
                   <span className="text-yellow-500 font-bold mr-2">
                     {doctor.rating.toFixed(1)}
@@ -373,7 +388,7 @@ function Home() {
         </div>
       </section>
 
-      <Testimonials />
+      <Testimonials id="reviews" />
       <Footer />
     </div>
   );

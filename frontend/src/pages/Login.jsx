@@ -71,7 +71,7 @@ function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white px-4">
       <div className="max-w-md w-full bg-neutral-900 rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+        <h2 className="text-2xl font-bold text-center  mb-6">
           Login to MetMed
         </h2>
 

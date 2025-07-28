@@ -1,54 +1,67 @@
-import { FaQuoteLeft } from "react-icons/fa";
+import React from "react";
+import { FaStar, FaUserCircle } from "react-icons/fa";
 import FadeIn from "./FadeIn";
 
 const testimonials = [
   {
-    name: "Ananya Sharma",
-    feedback:
-      "This platform made it so easy to book a consultation. The doctor was professional and kind. Highly recommend!",
-    role: "Patient",
-  },
-  {
-    name: "Dr. Rajeev Mehta",
-    feedback:
-      "Managing appointments is now seamless. The platform helps me focus more on my patients.",
+    name: "Dr. Aditi Sharma",
     role: "Cardiologist",
+    rating: 5,
+    content: "This platform has made consultations so easy. It’s incredibly reliable!",
+    avatar: "",
   },
   {
-    name: "Rohan Kapoor",
-    feedback:
-      "Very user-friendly and fast. Got my appointment confirmed within minutes.",
+    name: "Rohan Mehta",
     role: "Patient",
+    rating: 4,
+    content: "Booking appointments was seamless. Highly recommend!",
+    avatar: "",
+  },
+  {
+    name: "Dr. Prakash Iyer",
+    role: "Orthopedic Surgeon",
+    rating: 5,
+    content: "I love the dashboard and how easy it is to manage appointments.",
+    avatar: "", // No image
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="mt-24 py-16 px-4 md:px-8">
-      <div className="max-w-5xl mx-auto text-center">
-        <FadeIn direction="down">
-          <h2 className="text-4xl md:text-4xl font-bold mb-4 text-white">
-            What Our Users Say
-          </h2>
-          <p className="text-gray-400 text-xl mb-10">
+    <section id="testimonials" className="py-20 scroll-mt-12 h-dvh dark:bg-neutral-900 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <FadeIn direction="right" className="text-center space-y-4 mb-14">
+
+          <h2 className="text-3xl dark:text-white md:text-4xl font-bold">What Our Users Say</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-[600px] mx-auto">
             Hear from doctors and patients who trust our platform
           </p>
         </FadeIn>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((item, index) => (
-            <FadeIn
-              key={index}
-              direction="up"
-              className="h-full"
-              distance={40}
-            >
-              <div className="bg-neutral-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all h-full">
-                <FaQuoteLeft className="text-yellow-400 text-2xl mb-4" />
-                <p className="text-gray-400 mb-4">"{item.feedback}"</p>
-                <div className="font-semibold text-white">{item.name}</div>
-                <div className="text-sm text-gray-300">{item.role}</div>
+        <div className="grid md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <FadeIn direction="up" key={index} className="bg-white dark:bg-neutral-800 p-6 mt-10 rounded-xl shadow-md">
+              <div className="flex items-center space-x-4 mb-3">
+                {testimonial.avatar ? (
+                  <img
+                    src={testimonial.avatar}
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                ) : (
+                  <FaUserCircle className="w-12 h-12 text-gray-400" />
+                )}
+                <div>
+                  <div className="font-semibold dark:text-white">{testimonial.name}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-300">{testimonial.role}</div>
+                </div>
               </div>
+              <div className="flex space-x-1 mb-2">
+                {[...Array(testimonial.rating)].map((_, i) => (
+                  <FaStar key={i} className="text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-600 dark:text-gray-400">"{testimonial.content}"</p>
             </FadeIn>
           ))}
         </div>

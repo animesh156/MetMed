@@ -76,14 +76,14 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white px-4">
-      <div className="max-w-md w-full bg-neutral-900 rounded-lg shadow-lg p-8">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
+    <div className=" min-h-screen flex items-center justify-center bg-neutral-950 text-white px-4">
+      <div className="max-w-md  w-full bg-neutral-900 rounded-lg shadow-lg p-8">
+        <h2 className="text-2xl -mt-4 font-bold text-center  mb-6">
           Create Your Account
         </h2>
 
         {/* Role Toggle */}
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="flex justify-center gap-4 mb-3">
           {["patient", "doctor"].map((r) => (
             <button
               key={r}
@@ -101,7 +101,7 @@ function Register() {
         </div>
 
         {/* Register Form */}
-        <form onSubmit={handleRegister} className="space-y-6">
+        <form onSubmit={handleRegister} className="space-y-3">
           <div>
             <label className="block mb-2 text-sm text-gray-300">
               Full Name
