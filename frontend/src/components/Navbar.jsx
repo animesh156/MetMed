@@ -124,45 +124,21 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden px-4 pb-4 space-y-2 border-t bg-white dark:bg-gray-900">
-          <a
-            href="#features"
-            className="block text-sm text-gray-700 dark:text-gray-300"
-          >
-            Features
-          </a>
-          <a
-            href="#how-it-works"
-            className="block text-sm text-gray-700 dark:text-gray-300"
-          >
-            How It Works
-          </a>
-          <a
-            href="#testimonials"
-            className="block text-sm text-gray-700 dark:text-gray-300"
-          >
-            Reviews
-          </a>
-          <a
-            href="#pricing"
-            className="block text-sm text-gray-700 dark:text-gray-300"
-          >
-            Pricing
-          </a>
-          <div className="pt-2 flex flex-col space-y-2">
-            <button
-              className="text-left px-4 py-1 rounded-md text-sm font-medium hover:text-primary transition"
-              onClick={() => navigate("/login")}
+        <div className="md:hidden px-4 pb-4 space-y-2 border-t bg-white dark:bg-neutral-900">
+          {[
+            { href: "#features", label: "Features" },
+            { href: "#how-it-works", label: "How It Works" },
+            { href: "#testimonials", label: "Reviews" },
+            { href: "#pricing", label: "Pricing" },
+          ].map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="block text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary transition"
             >
-              Sign In
-            </button>
-            <button
-              className="text-left px-4 py-1 rounded-md bg-primary text-white text-sm font-medium hover:bg-primary/90 transition"
-              onClick={() => navigate("/register")}
-            >
-              Get Started
-            </button>
-          </div>
+              {label}
+            </a>
+          ))}
         </div>
       )}
     </header>
