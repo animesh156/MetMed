@@ -34,6 +34,21 @@ A full-stack MERN application for online appointment booking with real-time vide
 | Jitsi Meet        | Video call integration              |
 | Axios             | HTTP requests                       |
 
+<img width="1366" height="649" alt="Screenshot (399)" src="https://github.com/user-attachments/assets/e721b4ff-5dfe-4a3c-9f7a-42db1ff3fbd2" />
+
+<img width="1366" height="649" alt="Screenshot (400)" src="https://github.com/user-attachments/assets/40478d37-0e8c-4d93-960f-c31027d32ba1" />
+
+<img width="1366" height="661" alt="Screenshot (401)" src="https://github.com/user-attachments/assets/b706b812-11df-4f08-a83a-3986a4543c9f" />
+
+<img width="1366" height="632" alt="Screenshot (402)" src="https://github.com/user-attachments/assets/792212b5-724a-400b-8c6c-db8df4a4ccc4" />
+
+
+
+
+
+
+
+
 ## 📂 Folder Structure
 
 ```
