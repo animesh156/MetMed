@@ -36,7 +36,7 @@ function Home() {
       name: "Dr. Jane Smith",
       specialty: "Dermatology",
       image:
-        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000",
+        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description:
         "Expert in skin conditions with a patient-centered approach.",
       rating: 4.7,
@@ -45,7 +45,7 @@ function Home() {
       name: "Dr. Emily Johnson",
       specialty: "Pediatrics",
       image:
-        "https://plus.unsplash.com/premium_photo-1658506671316-0b293df7c72b?fm=jpg&q=60&w=3000",
+        "https://plus.unsplash.com/premium_photo-1661580574627-9211124e5c3f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       description: "Caring pediatrician dedicated to children's health.",
       rating: 2.7,
     },
@@ -173,16 +173,16 @@ function Home() {
         </FadeIn>
 
         <FadeIn direction="up">
-          <div className="flex gap-5 justify-center mb-14">
+          <div className="flex gap-3 md:gap-5 justify-center mb-14">
             <button
               onClick={() => navigate("/login")}
-              className="bg-gray-100 hover:bg-gray-200 active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
+              className="bg-gray-100 hover:bg-gray-200 active:scale-95 font-semibold px-4 md:px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
             >
               Book Consultation <CiCalendar className="text-xl" />
             </button>
             <button
               onClick={() => navigate("/login")}
-              className="dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:border-0 border border-gray-300 dark:text-white active:scale-95 font-semibold px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
+              className="dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:border-0 border border-gray-300 dark:text-white active:scale-95 font-semibold px-3 md:px-6 py-3 rounded-md shadow-md hover:shadow-lg flex items-center gap-2"
             >
               Join as Doctor <CiStethoscope className="text-xl" />
             </button>
@@ -221,7 +221,7 @@ function Home() {
       {/* Services */}
       <section className="mt-20" id="services">
         <FadeIn direction="left">
-          <h2 className="text-center dark:text-white font-bold text-5xl">
+          <h2 className="text-center dark:text-white font-bold text-2xl md:text-5xl">
             Our Medical Services
           </h2>
           <p className="mx-auto max-w-[400px] text-gray-500 dark:text-gray-400 mt-5 font-semibold text-lg text-center">
@@ -257,12 +257,12 @@ function Home() {
       {/* How it works */}
       <section
         id="how-it-works"
-        className="py-20 h-dvh scroll-mt-12 bg-slate-50 dark:bg-neutral-900"
+        className="py-20 h-auto md:h-dvh scroll-mt-12 bg-slate-50 dark:bg-neutral-900"
       >
         <div className="container">
           {/* Heading */}
           <FadeIn direction="left" className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl dark:text-white md:text-4xl font-bold">
+            <h2 className="text-2xl dark:text-white md:text-4xl font-bold">
               Simple Steps to Better Healthcare
             </h2>
             <p className="text-xl dark:text-gray-400 text-muted-foreground max-w-[600px] mx-auto">
@@ -294,12 +294,12 @@ function Home() {
       </section>
 
       {/* Features */}
-      <section className="text-center mt-40 scroll-mt-28" id="features">
+      <section className="text-center mt-25 scroll-mt-28" id="features">
         <FadeIn direction="right">
-          <h2 className="text-4xl dark:text-white font-bold">
+          <h2 className="md:text-4xl text-xl dark:text-white font-bold">
             Everything You Need for Modern Healthcare
           </h2>
-          <p className="text-xl mx-auto max-w-[600px] dark:text-gray-400 text-gray-500 mt-8 font-semibold">
+          <p className="text-md md:text-xl mx-auto max-w-[600px] dark:text-gray-400 text-gray-500 mt-8 font-semibold">
             Our platform offers everything needed for seamless healthcare
             delivery.
           </p>
@@ -331,20 +331,21 @@ function Home() {
         <FadeIn direction="right">
           <button
             onClick={() => navigate("/login")}
-            className="bg-gray-100 mx-auto hover:bg-gray-200 font-semibold px-6 py-3 rounded-md shadow-md flex items-center gap-2"
+            className="bg-gray-100 mx-auto hover:cursor-pointer hover:bg-gray-200 font-semibold px-6 py-3 rounded-md shadow-md flex items-center gap-2"
           >
             Book Consultation <CiCalendar className="text-xl" />
           </button>
         </FadeIn>
       </section>
 
+
       {/* Pricing */}
       <Pricing />
 
       {/* Doctors */}
-      <section className="mt-32 mb-6 text-center ">
+      <section className="md:mt-32 mt-20 mb-6 text-center ">
         <FadeIn direction="left">
-          <h1 className="text-4xl dark:text-white font-bold">
+          <h1 className="md:text-4xl text-2xl dark:text-white font-bold">
             Meet Our Expert Doctors
           </h1>
           <p className="mt-6 dark:text-gray-400 text-gray-500 max-w-[600px] mx-auto text-xl font-semibold">

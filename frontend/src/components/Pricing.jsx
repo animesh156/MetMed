@@ -46,7 +46,7 @@ export default function Pricing() {
     >
       <div className="container -mt-9 mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold dark:text-white">Pricing Plans</h2>
+          <h2 className="md:text-4xl text-2xl font-bold dark:text-white">Pricing Plans</h2>
           <p className="text-gray-600 dark:text-gray-400 mt-4 text-lg max-w-xl mx-auto">
             Choose a plan that fits your needs.
           </p>
@@ -90,7 +90,7 @@ export default function Pricing() {
                 <h3 className="text-2xl font-bold mb-2 dark:text-white">
                   {plan.name}
                 </h3>
-                <p className="text-xl font-semibold text-primary mb-2">
+                <p className="text-xl font-semibold dark:text-white mb-2">
                   {plan.price[billingCycle]}
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">

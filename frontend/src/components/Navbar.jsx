@@ -2,25 +2,17 @@ import React, { useEffect, useState } from "react";
 import { FaSun, FaMoon, FaBars, FaStethoscope } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
-  const [theme, setTheme] = useState("light");
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
-  // Apply saved theme or system preference
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    const systemPrefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const finalTheme = storedTheme || (systemPrefersDark ? "dark" : "light");
-
-    setTheme(finalTheme);
-    document.documentElement.classList.toggle("dark", finalTheme === "dark");
-  }, []);
+  
 
   // Handle scroll background change
   useEffect(() => {
@@ -29,13 +21,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // // Theme toggle
-  // const toggleTheme = () => {
-  //   const newTheme = theme === "light" ? "dark" : "light";
-  //   setTheme(newTheme);
-  //   localStorage.setItem("theme", newTheme);
-  //   document.documentElement.classList.toggle("dark", newTheme === "dark");
-  // };
+ 
 
   // Show navbar only on home route
   if (location.pathname !== "/") return null;
@@ -82,17 +68,17 @@ export default function Navbar() {
         {/* Right Actions */}
         <div className="flex items-center space-x-3">
           {/* Theme toggle */}
-          {/* <button
+          <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-            title="Toggle theme"
+            aria-label="Toggle Theme"
           >
             {theme === "light" ? (
               <FaSun className="text-yellow-500 text-lg" />
             ) : (
               <FaMoon className="text-blue-400 text-lg" />
             )}
-          </button> */}
+          </button>
 
           {/* Auth buttons */}
           <div className="hidden md:flex space-x-2">

@@ -3,3 +3,4 @@
   themes: false;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));

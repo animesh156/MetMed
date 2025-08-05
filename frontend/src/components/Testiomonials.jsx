@@ -32,7 +32,7 @@ export default function Testimonials() {
       <div className="container mx-auto px-4">
         <FadeIn direction="right" className="text-center space-y-4 mb-14">
 
-          <h2 className="text-3xl dark:text-white md:text-4xl font-bold">What Our Users Say</h2>
+          <h2 className="text-2xl dark:text-white md:text-4xl font-bold">What Our Users Say</h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-[600px] mx-auto">
             Hear from doctors and patients who trust our platform
           </p>
