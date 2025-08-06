@@ -5,14 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 
 export default function Navbar() {
-  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
-
-  
 
   // Handle scroll background change
   useEffect(() => {
@@ -20,8 +17,6 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
- 
 
   // Show navbar only on home route
   if (location.pathname !== "/") return null;
@@ -74,9 +69,9 @@ export default function Navbar() {
             aria-label="Toggle Theme"
           >
             {theme === "light" ? (
-              <FaSun className="text-yellow-500 text-lg" />
-            ) : (
               <FaMoon className="text-blue-400 text-lg" />
+            ) : (
+              <FaSun className="text-yellow-500 text-lg" />
             )}
           </button>
 
