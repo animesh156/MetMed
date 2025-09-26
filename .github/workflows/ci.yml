@@ -68,6 +68,8 @@ jobs:
           npm install
 
       - name: Run backend
+        env:
+          FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
         run: |
           cd backend
           npm start
