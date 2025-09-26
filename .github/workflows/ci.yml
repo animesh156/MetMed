@@ -5,7 +5,7 @@ on:
     branches: [ main ]        # Run automatically on main
   pull_request:
     branches: [ main ]        # Run on PRs to main
-  workflow_dispatch:           # Optional: allows manual trigger
+  workflow_dispatch:           # Allows manual trigger
 
 jobs:
   frontend-ci:
@@ -43,7 +43,7 @@ jobs:
           npm run build
 
   backend-ci:
-    name: Backend - Run
+    name: Backend - Test Only
     runs-on: ubuntu-latest
     needs: frontend-ci  # Run after frontend succeeds
 
@@ -67,12 +67,15 @@ jobs:
           cd backend
           npm install
 
-      - name: Run backend
+      - name: Run backend tests if available
         env:
           FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
-          MONGO_URI: ${{secrets.MONGO_URI}}
-          JWT_SECRET: ${{secrets.JWT_SECRET}}
-          PORT: ${{secrets.PORT}}
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: |
           cd backend
-          npm start
+          if [ -f package.json ] && grep -q "\"test\"" package.json; then
+            npm test
+          else
+            echo "No backend tests available, skipping..."
+          fi
