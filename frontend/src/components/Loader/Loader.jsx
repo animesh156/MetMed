@@ -10,6 +10,7 @@ const Loader = ({ size = "md", color = "blue" }) => {
   return (
     <div className="flex items-center justify-center py-8">
       <div
+        role="status"
         className={`animate-spin rounded-full border-4 border-${color}-500 border-t-transparent ${sizeClasses[size]}`}
       />
     </div>

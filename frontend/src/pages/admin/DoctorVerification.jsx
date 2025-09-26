@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/api";
 import toast from "react-hot-toast";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loader/Loader";
 
 function DoctorVerification() {
   const [doctors, setDoctors] = useState([]);

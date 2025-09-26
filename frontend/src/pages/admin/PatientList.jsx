@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/api";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loader/Loader";
 
 function PatientList() {
   const [patients, setPatients] = useState([]);
