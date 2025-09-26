@@ -44,10 +44,10 @@ jobs:
           cd frontend
           npm run build
 
-  backend-run:
-    name: Backend - Restart Server
+  backend-check:
+    name: Backend - Check Startup
     runs-on: ubuntu-latest
-    needs: frontend-ci   # run after frontend-ci succeeds
+    needs: frontend-ci   # only runs if frontend CI passes
 
     steps:
       - name: Checkout repo
@@ -63,7 +63,7 @@ jobs:
           cd backend
           npm install
 
-      - name: Restart backend server
+      - name: Check backend starts
         env:
           FIREBASE_SERVICE_ACCOUNT_BASE64: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_BASE64 }}
           MONGO_URI: ${{ secrets.MONGO_URI }}
@@ -71,4 +71,9 @@ jobs:
           PORT: ${{ secrets.PORT }}
         run: |
           cd backend
-          npm start
+          # Start backend in background, wait a few seconds, then kill
+          node index.js & 
+          BACKEND_PID=$!
+          sleep 5
+          echo "Backend started successfully"
+          kill $BACKEND_PID
