@@ -24,6 +24,14 @@ const testimonials = [
     content: "I love the dashboard and how easy it is to manage appointments.",
     avatar: "", // No image
   },
+
+  {
+    name: "Dr. Rakesh Gupta",
+    role: "Eye Surgeon",
+    rating: 5,
+    content: "I love the dashboard and how easy it is to manage appointments.",
+    avatar: "", // No image
+  },
 ];
 
 export default function Testimonials() {
