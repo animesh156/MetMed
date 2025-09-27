@@ -71,9 +71,20 @@ jobs:
           PORT: ${{ secrets.PORT }}
         run: |
           cd backend
-          # Start backend in background, wait a few seconds, then kill
-          node index.js & 
+          node index.js &
           BACKEND_PID=$!
           sleep 5
           echo "Backend started successfully"
           kill $BACKEND_PID
+
+  deploy-backend:
+    name: Deploy Backend to Render
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'   # only run on main branch after merge
+    needs: backend-check                  # only runs if backend check passes
+    steps:
+      - name: Trigger Render Deploy
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK_URL"
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
