@@ -2,12 +2,12 @@ name: CI - MediConnect
 
 on:
   push:
-    branches-ignore:
-      - main        # ignore direct pushes to main
+    branches:
+      - main        # Run workflow on direct pushes to main (for deploy)
   pull_request:
     branches:
-      - main        # run CI on PRs targeting main
-  workflow_dispatch: # manual trigger
+      - main        # Run CI on PRs targeting main
+  workflow_dispatch: # Optional manual trigger
 
 jobs:
   frontend-ci:
@@ -80,8 +80,8 @@ jobs:
   deploy-backend:
     name: Deploy Backend to Render
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'   # only run on main branch after merge
-    needs: backend-check                  # only runs if backend check passes
+    needs: backend-check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     steps:
       - name: Trigger Render Deploy
         run: |
