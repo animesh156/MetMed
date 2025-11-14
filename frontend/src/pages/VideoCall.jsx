@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import API from "../utils/api";
 import toast from "react-hot-toast";
 
-const VideoCallPage = () => {
+const VideoCall = () => {
   const { roomId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -61,4 +61,4 @@ const VideoCallPage = () => {
   );
 };
 
-export default VideoCallPage;
+export default VideoCall;
