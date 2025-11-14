@@ -6,11 +6,11 @@ const earningSchema = new mongoose.Schema({
     ref: "Doctor",
     required: true,
   },
-  appointmentId: {
+  appointmentIds: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Appointment",
     required: true,
-  },
+  }],
   amount: {
     type: Number,
     default: 0,

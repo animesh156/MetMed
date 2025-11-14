@@ -15,13 +15,14 @@ function Register() {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
     if (!name || !email || !password) {
       toast.error("Please fill in all fields");
       return;
     }
 
     try {
-      const response = API.post(
+      const response = await API.post(
         "/auth/register",
         {
           name,
@@ -30,23 +31,29 @@ function Register() {
           role,
         },
         {
-          withCredentials: true, // Ensure cookies are sent
+          withCredentials: true, // Allow cookie (JWT) from backend
         }
       );
 
+      // Success
       if (response.status === 201) {
         localStorage.setItem("name", response.data.name);
         localStorage.setItem("role", response.data.role);
         toast.success("Registration successful");
+
         if (role === "doctor") navigate("/doctor/dashboard");
         else if (role === "admin") navigate("/admin/dashboard");
         else navigate("/patient/dashboard");
-      } else {
-        toast.error("User already exist");
       }
     } catch (error) {
-      console.error("Registration Error:", error.message);
-      toast.error("Registration failed. Please try again.");
+      // Handling API errors properly
+      if (error.response?.status === 400) {
+        toast.error("User already exists");
+      } else {
+        toast.error("Registration failed. Please try again.");
+      }
+
+      console.error("Registration Error:", error);
     }
   };
 
