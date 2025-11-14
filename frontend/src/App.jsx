@@ -25,11 +25,14 @@ import DoctorSchedule from "./pages/doctor/Schedule";
 import DoctorEarning from "./pages/doctor/EarningReport";
 import DoctorSettings from "./pages/doctor/DoctorSettings";
 import DoctorProfile from "./pages/doctor/Profile";
+import DoctorReviews from "./pages/doctor/DoctorReviews";
 
 // Admin Pages
 import AdminDashBaord from "./pages/admin/DashBoard";
 import DoctorVerify from "./pages/admin/DoctorVerification";
 import PatientList from "./pages/admin/PatientList";
+
+import VideoCallPage from "./pages/videoCall";
 
 // Layouts
 import HomeLayout from "./components/HomeLayout"; // contains Navbar + ThemeToggle
@@ -150,6 +153,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+         <Route
+          path="/doctor/reviews"
+          element={
+            <ProtectedRoute allowedRoles={["doctor"]}>
+              <DoctorReviews />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/doctor/settings"
           element={
@@ -193,6 +204,7 @@ function App() {
           }
         />
 
+         <Route path="/call/:roomId" element={<VideoCallPage />} />
         {/* Catch-all route */}
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -16,7 +16,6 @@ const Schedule = () => {
           withCredentials: true,
         });
         setAppointments(res.data);
-        
       } catch (err) {
         console.error("Error fetching appointments", err);
         toast.error("Failed to load appointments");
@@ -40,7 +39,7 @@ const Schedule = () => {
           status: newStatus,
           videoCallLink,
         },
-        { withCredentials: true } 
+        { withCredentials: true }
       );
 
       toast.success(`Appointment ${newStatus}`);
@@ -77,7 +76,7 @@ const Schedule = () => {
         onClick={() => navigate("/doctor/dashboard")}
         className="mb-6 text-blue-400 hover:text-blue-500 transition"
       >
-        ← Back 
+        ← Back
       </button>
 
       <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">
@@ -97,7 +96,9 @@ const Schedule = () => {
                 <h3 className="text-xl font-semibold text-white">
                   {appointment.patientId?.name || "Unknown"}
                 </h3>
-                <span className="text-sm text-gray-400">{appointment.slot}</span>
+                <span className="text-sm text-gray-400">
+                  {appointment.slot}
+                </span>
               </div>
 
               <p className="text-gray-300 mb-1">Reason: {appointment.reason}</p>
@@ -119,18 +120,26 @@ const Schedule = () => {
                   appointment.status.slice(1)}
               </p>
 
-              {appointment.status === "confirmed" && appointment.videoCallLink && (
-                <div className="mt-4">
-                  <a
-                    href={appointment.videoCallLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
-                  >
-                    Join Video Call
-                  </a>
-                </div>
-              )}
+              {appointment.status === "confirmed" &&
+                appointment.videoCallLink && (
+                  <div className="mt-4">
+                   <button
+  onClick={() =>
+    navigate(`/call/healthapp-${appointment._id}`, {
+      state: {
+        appointmentId: appointment._id,
+        doctorId: appointment.doctorId?._id,
+        role: "doctor", // or "patient" depending on login
+      },
+    })
+  }
+  className="inline-block bg-blue-600 text-white px-4 py-2 rounded"
+>
+  Join Video Call
+</button>
+
+                  </div>
+                )}
 
               {appointment.status === "pending" && (
                 <div className="mt-4 flex gap-2">

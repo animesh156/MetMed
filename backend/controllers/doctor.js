@@ -2,6 +2,7 @@ const Doctor = require("../models/doctor");
 const User = require("../models/user");
 const Earning = require("../models/earning");
 const Appointment = require("../models/appointment");
+const Review = require('../models/review')
 
 const addDoctorDetails = async (req, res) => {
   try {
@@ -191,6 +192,7 @@ const addEarning = async (req, res) => {
 // // Fetching doctor profile with populated doctorId
 const getDoctorProfile = async (req, res) => {
   try {
+    console.log(req.user._id)
     const doctor = await Doctor.findOne({ doctorId: req.user._id }).populate(
       "doctorId",
       "name email"
@@ -341,6 +343,40 @@ const getDoctorEarnings = async (req, res) => {
 };
 
 
+const getDoctorReviews = async (req, res) => {
+  try {
+    // Find doctor profile for logged-in user
+    const doctor = await Doctor.findOne({ doctorId: req.user._id });
+
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor profile not found" });
+    }
+
+    // Fetch all reviews for this doctor
+    const reviews = await Review.find({ doctorId: doctor._id })
+      .populate("userId", "name")  // patient name
+      .sort({ createdAt: -1 });    // newest first
+
+    // Calculate average rating
+    const totalReviews = reviews.length;
+
+    const avgRating =
+      totalReviews === 0
+        ? 0
+        : (reviews.reduce((sum, r) => sum + r.rating, 0) / totalReviews).toFixed(1);
+
+    return res.status(200).json({
+      avgRating,
+      totalReviews,
+      reviews,
+    });
+
+  } catch (error) {
+    console.error("Error fetching doctor reviews:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 
 module.exports = {
   addDoctorDetails,
@@ -350,5 +386,6 @@ module.exports = {
   getAllDoctors,
   upcomingAppointments,
   updateAppointmentStatus,
-  getDoctorEarnings
+  getDoctorEarnings,
+  getDoctorReviews
 };

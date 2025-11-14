@@ -109,14 +109,22 @@ function UpcomingAppointment() {
 
               {appt.status === "confirmed" && appt.videoCallLink && (
                 <div className="mt-4 flex flex-col gap-2">
-                  <a
-                    href={appt.videoCallLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition"
-                  >
-                    Join Video Call
-                  </a>
+                 <button
+  onClick={() =>
+    navigate(`/call/healthapp-${appt._id}`, {
+      state: {
+        appointmentId: appt._id,
+        doctorId: appt.doctorId?._id,
+        role: "patient", // 👈 patient role here
+      },
+    })
+  }
+  className="inline-block bg-blue-600 text-white px-4 py-2 rounded"
+>
+  Join Video Call
+</button>
+
+
 
                   <button
                     onClick={async () => {
