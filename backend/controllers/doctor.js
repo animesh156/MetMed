@@ -86,17 +86,57 @@ const updateDoctorDetails = async (req, res) => {
 };
 
 // for adding doctor's earning
+// const addEarning = async (req, res) => {
+//   try {
+//     const { amount, appointmentId } = req.body;
+
+//     console.log(req.body)
+
+//     if (!appointmentId || !amount) {
+//       return res
+//         .status(400)
+//         .json({ error: "Appointment ID and amount are required." });
+//     }
+
+//     // Ensure it's a doctor user
+//     const user = await User.findById(req.user._id);
+//     if (!user || user.role !== "doctor") {
+//       return res.status(403).json({ error: "Only doctors can add earnings." });
+//     }
+
+//     const doctor = await Doctor.findOne({ doctorId: user._id });
+//     if (!doctor) {
+//       return res.status(404).json({ error: "Doctor profile not found." });
+//     }
+
+//     const newEarning = new Earning({
+//       doctorId: doctor._id,
+//       appointmentId,
+//       amount,
+//     });
+
+//     await newEarning.save();
+
+//     return res.status(201).json({
+//       message: "Earning added successfully.",
+//       earning: newEarning,
+//     });
+//   } catch (error) {
+//     console.log("error adding amount", error);
+//     return res.status(500).json("Server error");
+//   }
+// };
+
+
 const addEarning = async (req, res) => {
   try {
     const { amount, appointmentId } = req.body;
 
     if (!appointmentId || !amount) {
-      return res
-        .status(400)
-        .json({ error: "Appointment ID and amount are required." });
+      return res.status(400).json({ error: "Appointment ID and amount are required." });
     }
 
-    // Ensure it's a doctor user
+    // Validate doctor
     const user = await User.findById(req.user._id);
     if (!user || user.role !== "doctor") {
       return res.status(403).json({ error: "Only doctors can add earnings." });
@@ -107,9 +147,28 @@ const addEarning = async (req, res) => {
       return res.status(404).json({ error: "Doctor profile not found." });
     }
 
+    // Check if earning already exists
+    let earning = await Earning.findOne({ doctorId: doctor._id });
+
+    if (earning) {
+      // Prevent duplicate appointment entries
+      if (!earning.appointmentIds.includes(appointmentId)) {
+        earning.appointmentIds.push(appointmentId);
+        earning.amount += amount;
+      }
+
+      await earning.save();
+
+      return res.status(200).json({
+        message: "Earning updated successfully.",
+        earning,
+      });
+    }
+
+    // Create new earning entry
     const newEarning = new Earning({
       doctorId: doctor._id,
-      appointmentId,
+      appointmentIds: [appointmentId],
       amount,
     });
 
@@ -119,11 +178,15 @@ const addEarning = async (req, res) => {
       message: "Earning added successfully.",
       earning: newEarning,
     });
+
   } catch (error) {
     console.log("error adding amount", error);
     return res.status(500).json("Server error");
   }
 };
+
+
+
 
 // // Fetching doctor profile with populated doctorId
 const getDoctorProfile = async (req, res) => {
@@ -144,9 +207,10 @@ const getDoctorProfile = async (req, res) => {
   }
 };
 
+// get all verfied doctors
 const getAllDoctors = async (req, res) => {
   try {
-    const doctors = await Doctor.find({}).populate(
+    const doctors = await Doctor.find({isVerified: true}).populate(
       "doctorId",
       "name age email"
     ); // include required user fields
@@ -177,6 +241,7 @@ const upcomingAppointments = async (req, res) => {
       doctorId: doctor._id,
       date: { $gte: startOfToday }, // Only future or today's appointments
     })
+      .populate("doctorId", "fee")
       .populate("patientId", "name email age")
       .sort({ date: 1 });
 
@@ -221,48 +286,60 @@ const updateAppointmentStatus = async (req, res) => {
 
 
 const getDoctorEarnings = async (req, res) => {
- try {
-  console.log("Logged in doctor ID:", req.user._id);
+  try {
+    console.log("Logged in doctor ID:", req.user._id);
 
-  const doctor = await Doctor.findOne({ doctorId: req.user._id });
-  if (!doctor) {
-    return res.status(404).json({ error: "Doctor profile not found." });
-  }
+    // Find doctor profile
+    const doctor = await Doctor.findOne({ doctorId: req.user._id });
+    if (!doctor) {
+      return res.status(404).json({ error: "Doctor profile not found." });
+    }
 
-    const earnings = await Earning.find({ doctorId: doctor._id })
+    // Find earnings (single entry per doctor)
+    const earning = await Earning.findOne({ doctorId: doctor._id })
       .populate({
-        path: "appointmentId",
+        path: "appointmentIds",
         populate: {
           path: "patientId",
           select: "name",
         },
-      })
-      .sort({ date: -1 });
+      });
 
-    const month = new Date().toLocaleString("default", {
-      month: "long",
-      year: "numeric",
-    });
+    // If no earnings yet
+    if (!earning) {
+      return res.status(200).json({
+        month: new Date().toLocaleString("default", { month: "long", year: "numeric" }),
+        total: 0,
+        consultations: [],
+      });
+    }
 
-    const consultations = earnings.map((e) => ({
-      _id: e._id,
-      patient: e.appointmentId?.patientId?.name || "Unknown",
-      date: e.date,
-      amount: e.amount,
+    // Build consultation list
+    const consultations = earning.appointmentIds.map((appt) => ({
+      _id: appt._id,
+      patient: appt.patientId?.name || "Unknown",
+      date: appt.date,
+      amount: doctor.fee, // FIXED FEE PER APPOINTMENT
     }));
 
-    const total = consultations.reduce((sum, c) => sum + c.amount, 0);
+    // Total earnings (from DB)
+    const total = earning.amount;
+
+    // Sort by most recent
+    consultations.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     return res.status(200).json({
-      month,
+      month: new Date().toLocaleString("default", { month: "long", year: "numeric" }),
       total,
       consultations,
     });
+
   } catch (error) {
     console.error("Error fetching earnings:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
+
 
 
 module.exports = {

@@ -78,8 +78,8 @@ function DoctorDashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <DashboardCard
-            title="Today's Appointments"
-            text="5 patients scheduled"
+            title="Upcoming Appointments"
+            text="Latest patients scheduled"
             btnText="View Schedule"
             onClick={() => navigate("/doctor/schedule")}
           />
@@ -99,7 +99,7 @@ function DoctorDashboard() {
           /> */}
           <DashboardCard
             title="My Earnings"
-            text="₹84,000 earned this month"
+            text="Find your earnings"
             btnText="View Reports"
             onClick={() => navigate("/doctor/earning")}
             bg="bg-gray-700 hover:bg-gray-600"

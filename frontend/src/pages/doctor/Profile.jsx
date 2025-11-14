@@ -12,7 +12,9 @@ function Profile() {
   useEffect(() => {
     const fetchDoctorProfile = async () => {
       try {
-        const response = await API.get("/doctor/profile", { withCredentials: true });
+        const response = await API.get("/doctor/profile", {
+          withCredentials: true,
+        });
         setDoctor(response.data);
       } catch (err) {
         toast.error("Failed to fetch profile");
@@ -29,7 +31,9 @@ function Profile() {
 
   if (!doctor) {
     return (
-      <div className="text-center text-gray-400 mt-10">Doctor profile not found.</div>
+      <div className="text-center text-gray-400 mt-10">
+        Doctor profile not found.
+      </div>
     );
   }
 
@@ -43,12 +47,17 @@ function Profile() {
         ← Back
       </button>
 
-      <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">Doctor Profile</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-blue-400">
+        Doctor Profile
+      </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-lg">
         <ProfileItem label="Name" value={doctor.doctorId?.name || "N/A"} />
         <ProfileItem label="Email" value={doctor.doctorId?.email || "N/A"} />
-        <ProfileItem label="Specialization" value={doctor.specialization || "N/A"} />
+        <ProfileItem
+          label="Specialization"
+          value={doctor.specialization || "N/A"}
+        />
         <ProfileItem label="Experience" value={`${doctor.experience} years`} />
         <ProfileItem
           label="Available Slots"

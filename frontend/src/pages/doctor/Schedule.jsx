@@ -16,6 +16,7 @@ const Schedule = () => {
           withCredentials: true,
         });
         setAppointments(res.data);
+        
       } catch (err) {
         console.error("Error fetching appointments", err);
         toast.error("Failed to load appointments");
@@ -39,7 +40,7 @@ const Schedule = () => {
           status: newStatus,
           videoCallLink,
         },
-        { withCredentials: true }
+        { withCredentials: true } 
       );
 
       toast.success(`Appointment ${newStatus}`);
