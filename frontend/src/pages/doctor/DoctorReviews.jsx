@@ -16,18 +16,10 @@ const DoctorReviews = () => {
       try {
         const res = await API.get("/doctor/reviews", { withCredentials: true });
 
-        if (res.data.length === 0) {
-          setReviews([]);
-          setAvgRating(0);
-        } else {
-          setReviews(res.data);
+        console.log(res.data);
 
-          const avg =
-            res.data.reduce((sum, r) => sum + r.rating, 0) /
-            res.data.length;
-
-          setAvgRating(avg.toFixed(1));
-        }
+        setReviews(res.data.reviews || []);
+        setAvgRating(res.data.avgRating || 0);
       } catch (err) {
         console.error("Error fetching reviews:", err);
         toast.error("Failed to load reviews.");
@@ -70,11 +62,11 @@ const DoctorReviews = () => {
       {reviews.length === 0 ? (
         <p className="text-center text-gray-400">No reviews yet.</p>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {reviews.map((rev) => (
             <div
               key={rev._id}
-              className="bg-neutral-800 p-5 rounded-lg border border-neutral-700 shadow"
+              className="bg-neutral-800 p-4 rounded-lg border border-neutral-700 shadow"
             >
               <div className="flex items-center justify-between">
                 <p className="font-semibold text-lg">

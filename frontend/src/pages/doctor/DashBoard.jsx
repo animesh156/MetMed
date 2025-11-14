@@ -21,7 +21,7 @@ function DoctorDashboard() {
     { name: "Dashboard", icon: MdDashboard, route: "/doctor/dashboard" },
     { name: "Appointments", icon: MdCalendarToday, route: "/doctor/schedule" },
     { name: "Earnings", icon: MdOutlineAttachMoney, route: "/doctor/earning" },
-    // { name: "Reviews", icon: MdOutlineAttachMoney, route: "/doctor/reviews" },
+    { name: "Reviews", icon: MdOutlineAttachMoney, route: "/doctor/reviews" },
     { name: "Profile", icon: CgProfile, route: "/doctor/profile" },
     { name: "Settings", icon: IoSettingsOutline, route: "/doctor/settings" },
     { name: "Logout", icon: FiLogOut, route: "/" },
