@@ -32,7 +32,7 @@ import AdminDashBaord from "./pages/admin/DashBoard";
 import DoctorVerify from "./pages/admin/DoctorVerification";
 import PatientList from "./pages/admin/PatientList";
 
-import VideoCallPage from "./pages/videoCall";
+import VideoCallPage from "./pages/VideoCall";
 
 // Layouts
 import HomeLayout from "./components/HomeLayout"; // contains Navbar + ThemeToggle
