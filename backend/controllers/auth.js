@@ -2,10 +2,10 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const admin = require("../config/fireBaseAdmin");
-const Doctor = require('../models/doctor')
+const Doctor = require("../models/doctor");
 
-const generateToken = (res,user) => {
-  const token = jwt.sign( 
+const generateToken = (res, user) => {
+  const token = jwt.sign(
     {
       userId: user._id,
       role: user.role,
@@ -17,10 +17,10 @@ const generateToken = (res,user) => {
   );
 
   res.cookie("jwt", token, {
-    httpOnly: true,    // cookie can't be accessed by document.cookie protects from XSS attack
+    httpOnly: true, // cookie can't be accessed by document.cookie protects from XSS attack
     secure: process.env.NODE_ENV === "production", //Cookie is sent only over HTTPS.
-      // sameSite: "None", // Controls whether cross-site cookies are allowed.
-    sameSite: "Lax", // for DEV, 
+    sameSite: "None", // Controls whether cross-site cookies are allowed.
+    // sameSite: "Lax", // for DEV,
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };
@@ -37,8 +37,10 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: "Please fill all the fields" });
     }
 
-    if (role === 'admin') {
-      return res.status(401).json({ message: "You are not allowed to create admin users" });
+    if (role === "admin") {
+      return res
+        .status(401)
+        .json({ message: "You are not allowed to create admin users" });
     }
 
     const userExists = await User.findOne({ email });
@@ -56,13 +58,12 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
       role,
     });
-     
-     if (role === "doctor") {
+
+    if (role === "doctor") {
       await Doctor.create({
         doctorId: user._id, // only this field for now
       });
     }
-
 
     if (user) {
       generateToken(res, user);
@@ -99,7 +100,7 @@ const loginUser = async (req, res) => {
   }
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    generateToken(res,user);
+    generateToken(res, user);
 
     res.json({
       _id: user._id,
@@ -112,20 +113,17 @@ const loginUser = async (req, res) => {
   }
 };
 
-
-
 const firebaseLogin = async (req, res) => {
   const { token, role } = req.body;
 
   try {
-
     if (!token) {
       return res.status(400).json({ error: "Firebase token is required" });
     }
 
-      const decoded = await admin.auth().verifyIdToken(token);
+    const decoded = await admin.auth().verifyIdToken(token);
 
-    const { email, name} = decoded;
+    const { email, name } = decoded;
 
     if (!email) {
       return res.status(400).json({ error: "Invalid Firebase token" });
@@ -137,13 +135,12 @@ const firebaseLogin = async (req, res) => {
     if (!user) {
       //  If not, create one
 
-       // 🔢 Generate 5-digit random password
+      // 🔢 Generate 5-digit random password
       const rawPassword = Math.floor(10000 + Math.random() * 90000).toString();
 
       // 🔐 Hash it
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(rawPassword, salt);
-
 
       user = await User.create({
         name,
@@ -153,12 +150,12 @@ const firebaseLogin = async (req, res) => {
       });
     }
 
-    generateToken(res,user);
+    generateToken(res, user);
     return res.status(200).json({
       message: "Login successful",
       name: user.name,
       email: user.email,
-      role: user.role
+      role: user.role,
     });
   } catch (err) {
     console.error("Firebase login error:", err);
