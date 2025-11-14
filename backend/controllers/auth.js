@@ -19,8 +19,7 @@ const generateToken = (res, user) => {
   res.cookie("jwt", token, {
     httpOnly: true, // cookie can't be accessed by document.cookie protects from XSS attack
     secure: process.env.NODE_ENV === "production", //Cookie is sent only over HTTPS.
-    sameSite: "None", // Controls whether cross-site cookies are allowed.
-    // sameSite: "Lax", // for DEV,
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
   });
 };

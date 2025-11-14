@@ -1,8 +1,11 @@
 import axios from "axios";
 
+const BASE_URL = import.meta.env.PROD
+  ? import.meta.env.VITE_BACKEND_PROD_URL
+  : import.meta.env.VITE_DEV_BACKEND_URL;
+
 const API = axios.create({
-  // baseURL: "http://localhost:5000/api", // for development
-  baseURL: "https://metmed.onrender.com/api", // for production
+  baseURL: BASE_URL,
   withCredentials: true,
 });
 
